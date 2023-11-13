@@ -1,0 +1,2 @@
+class Mecanicos:
+    pass
