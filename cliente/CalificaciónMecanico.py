@@ -1,0 +1,2 @@
+class CalificaciónMecanico:
+    pass
