@@ -1,6 +1,12 @@
+import sys
+
+sys.path.append('C:\\Users\\juans\\OneDrive\\Documentos\\GitHub\\practica-2-grupo-dos-equipo-3\\src\\gestorAplicacion')
+print(sys.path)
+
 import pickle
 
 from gestorAplicacion.cliente.TipoDaño import TipoDaño
+
 from gestorAplicacion.tallerMecanica.Administrador import Administrador
 from gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
 from gestorAplicacion.tallerMecanica.Proveedor import Proveedor
