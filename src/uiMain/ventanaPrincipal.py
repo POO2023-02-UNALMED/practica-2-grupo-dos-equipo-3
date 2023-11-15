@@ -1,16 +1,39 @@
-from tkinter import Tk, Frame
+from tkinter import *
+import tkinter as tk
 
 ventana = Tk()
-ventana.title("Mi Ventana")
-ventana.geometry("450x250")
+ventana.title("UNTaller")
+ventana.geometry("500x300")
 
-frame = Frame(ventana, height=250, width=450, bg="red")
-frame.pack(padx=5, pady=5)
+frame = Frame(ventana, height=300, width=500)
+frame.pack()
 
-frame2 = Frame(frame, height=200, width=400, bg = "blue")
-frame2.pack(padx=10, pady=10)
+Label(frame, text="UNTaller", font=("Arial", 11)).grid(row=0, column=0)
 
-frame3 = Frame(frame2, height=150, width=400, bg = "blue")
-frame3.pack(padx=10, pady=10)
+menuBar = tk.Menu(frame)
+
+# Crea opciones1 y opciones2 como submenús de menuBar
+opciones1 = tk.Menu(menuBar)
+opciones2 = tk.Menu(menuBar)
+
+# Añade opciones al submenú opciones1
+opciones1.add_command(label="Opción 1")
+opciones1.add_command(label="Opción 2")
+
+# Añade opciones al submenú opciones2
+opciones2.add_command(label="Opción 3")
+opciones2.add_command(label="Opción 4")
+
+# Añade los submenús al menú principal
+menuBar.add_cascade(label="Menu 1", menu=opciones1)
+menuBar.add_cascade(label="Menu 2", menu=opciones2)
+
+# Asigna el menú a la ventana
+ventana.config(menu=menuBar)
 
 ventana.mainloop()
+
+
+
+
+

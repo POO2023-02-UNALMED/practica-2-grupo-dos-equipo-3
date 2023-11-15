@@ -1,7 +1,6 @@
 import pickle
 
 from gestorAplicacion.cliente.TipoDaño import TipoDaño
-
 from gestorAplicacion.tallerMecanica.Administrador import Administrador
 from gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
 from gestorAplicacion.tallerMecanica.Proveedor import Proveedor
