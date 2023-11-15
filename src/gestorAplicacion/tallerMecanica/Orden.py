@@ -22,8 +22,8 @@ class Orden:
         self._precio = precio
         Orden.asignadorId += 1
         Orden.numOrdenes += 1
-        self._mecanico.getOrdenes().add(self)
-        self._admin.getOrdenes().add(self)
+        self._mecanico.getOrdenes().append(self)
+        self._admin.getOrdenes().append(self)
         
     def completarOrden(self):
         if self._estado == False:

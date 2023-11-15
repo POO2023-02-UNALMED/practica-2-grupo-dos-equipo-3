@@ -53,10 +53,7 @@ def ventana_inicial():
     opciones1.add_command(label="descripcion", command = descripcionFunc)
     menubar1.add_cascade(label="Inicio", menu=opciones1)        
  
-    bsumar = Button(text="ingresar",command=ingresarFunc).place(width=80, x=250,y=630)
-
-
-
+    bIngresar = Button(text="ingresar",command=ingresarFunc).place(width=80, x=250,y=630)
     ventana.mainloop()
 
 
