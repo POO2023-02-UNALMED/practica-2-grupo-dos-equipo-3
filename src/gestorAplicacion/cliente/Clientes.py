@@ -1,7 +1,7 @@
 from cliente.Vehiculo import Vehiculo
-from tallerMecanica.Administrador import Administrador
-from tallerMecanica.Mecanicos import Mecanicos
-from tallerMecanica.Orden import Orden
+from taller_mecanica.Administrador import Administrador
+from taller_mecanica.Mecanicos import Mecanicos
+from taller_mecanica.Orden import Orden
 from CalificaciónMecanico import CalificaciónMecanico
 
 class Clientes(CalificaciónMecanico):
