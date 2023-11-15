@@ -607,3 +607,4 @@ class Administrador:
 
     def añadirTipoDaño(self, tipo):
         self._tiposDaño.append(tipo)
+
