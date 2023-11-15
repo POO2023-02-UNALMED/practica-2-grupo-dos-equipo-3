@@ -1,5 +1,5 @@
 from Repuestos import Repuestos
-class RepuestosDeluxe(Repuestos):
+class repuestoDeluxe(Repuestos):
 
     def __init__(self):
         super().__init__(self)
