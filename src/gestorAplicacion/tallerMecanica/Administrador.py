@@ -3,12 +3,20 @@ from Orden import Orden
 class Administrador:
     serialVersionUID = 1
     def __init__(self, nombre="", id=0,inventario=None) -> None:
+        self._mecanicos = []
+        self._proveedores = []
+        self._ordenes = []
+        self._mecanicosDisponibles = []
+        self._calificacionesTaller = []
+        self._tiposDaño = []
+        self._clientes = []
+        
         self._nombre = nombre
         self._id = id
         self._inventario = inventario
         
     def añadirCliente(self, cliente):
-        self._cliente = cliente
+        self._clientes.append(cliente)
         
     def getNombre(self):
         return self._nombre
@@ -58,7 +66,7 @@ class Administrador:
     def despedir(self, mecanico):
         for i in range(len(self._mecanicos)):
             if mecanico == self._mecanicos[i]:
-                self._mecanicos.remove(i)
+                self._mecanicos.remove(mecanico)
 	
     def añadirProveedor(self, proveedor):
         self._proveedores.append(proveedor)
@@ -69,7 +77,7 @@ class Administrador:
             if id == self._ordenes[i].getId():
                 orden = self._ordenes[i]
         return orden
-	
+ 
     def asignarMecanico(self, nombre):
         mecanicoElegido = self._mecanicos[0]
         for i in range(len(self._mecanicos)):
@@ -599,3 +607,4 @@ class Administrador:
 
     def añadirTipoDaño(self, tipo):
         self._tiposDaño.append(tipo)
+

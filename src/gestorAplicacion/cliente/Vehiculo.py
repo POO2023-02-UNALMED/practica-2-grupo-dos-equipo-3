@@ -1,5 +1,5 @@
 import random
-from taller_mecanica.Administrador import Administrador
+from tallerMecanica.Administrador import Administrador
 
 class Vehiculo:
     serialVersionUID = 1
