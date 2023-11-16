@@ -1,9 +1,9 @@
 import pickle
+def serializador():
+    picklefile = open("src/baseDatos/temp/pcs.pkl", "rb")
 
-picklefile = open("src/baseDatos/temp/pcs.pkl", "rb")
+    pcs = pickle.load(picklefile)
 
-pcs = pickle.load(picklefile)
+    picklefile.close()
 
-picklefile.close()
-
-print(type(pcs))
+    print(type(pcs))
