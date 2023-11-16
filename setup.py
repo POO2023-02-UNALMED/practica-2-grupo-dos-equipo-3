@@ -1,11 +1,6 @@
-from setuptools import setup
+import random
 
-setup(
+# Generar un número entero aleatorio entre 1 y 100
+numero_aleatorio = random.randint(1, 100)
 
-    name="Clientes",
-    version="1.0",
-    description="porfavor funciona :c",
-    author="sini",
-    packages=["gestorAplicación", "gestorAplicacion.cliente"]
-    
-    )
+print("Número aleatorio:", numero_aleatorio)
