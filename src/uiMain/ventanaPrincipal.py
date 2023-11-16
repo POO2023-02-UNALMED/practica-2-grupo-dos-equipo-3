@@ -42,22 +42,63 @@ class VentanaInicial:
     def __init__(self):
         self.ventana1 = tk.Tk()
         self.ventana1.title("Mi Aplicación")
-        self.ventana1.geometry("800x600")
+        self.ventana1.geometry("1500x740")
 
-        textoBreveDescripcion = "Bienvenido al sistema del Taller de Mecanica, en este espacio usted podrá administrar nóminas, inventarios, proveedores y repuestos dependiendo de su categoría de usuario. Garantizamos un acceso seguro y controlado a las diversas funciones y datos del programa"
-        etiqueta = tk.Label(self.ventana1, text=textoBreveDescripcion, borderwidth=2, relief="solid", wraplength=770, font=16)
-        etiqueta.grid(row=0, column=0, sticky='nw', padx=10, pady=10)
+        # Frame superior
+        frame_superior = tk.Frame(self.ventana1)
+        frame_superior.pack(fill=tk.X)
 
+        frame_titulo1 = tk.Frame(frame_superior, bg="red", height=50)
+        tk.Label(frame_titulo1, text="¡Bienvenid@!", font=("Arial", 14), bg="red", fg="white").pack(fill=tk.BOTH, expand=True)
+        frame_titulo1.pack(fill=tk.X)
+
+        # Zona izquierda superior
+        frame_izquierda = tk.Frame(frame_superior)
+        frame_izquierda.pack(side=tk.LEFT, fill=tk.Y, padx=10)
+
+        texto_breve_descripcion = "Bienvenido al sistema del Taller de Mecanica, en este espacio usted podrá administrar nóminas, inventarios, proveedores y repuestos dependiendo de su categoría de usuario. Garantizamos un acceso seguro y controlado a las diversas funciones y datos del programa"
+        etiqueta_izquierda = tk.Label(frame_izquierda, text=texto_breve_descripcion, borderwidth=2, relief="solid", wraplength=700, font=16 )
+        etiqueta_izquierda.pack(side=tk.LEFT, pady=12)
+
+        # Barra de menú
         menubar1 = tk.Menu(self.ventana1)
         self.ventana1.config(menu=menubar1)
-        opciones1 = tk.Menu(menubar1)
-        opciones1.add_command(label="salir", command=self.salirFunc)
-        opciones1.add_command(label="descripcion", command=self.descripcionFunc)
+        
+        opciones1 = tk.Menu(menubar1, tearoff=0)
+        opciones1.add_command(label="Salir", command=self.salirFunc)
+        opciones1.add_command(label="Descripción", command=self.descripcionFunc)
+        
         menubar1.add_cascade(label="Inicio", menu=opciones1)
 
-        bsumar = tk.Button(self.ventana1, text="ingresar", command=self.ingresarFunc)
-        bsumar.place(width=80, x=250, y=500)
+        # Botón "Ingresar"
+        b_ingresar = tk.Button(self.ventana1, text="Ingresar", command=self.ingresarFunc)
+        b_ingresar.place(width=170, x=250, y=700)
+
+        # Zona derecha superior
+        frame_derecha = tk.Frame(frame_superior)
+        frame_derecha.pack(side=tk.RIGHT, fill=tk.Y, padx=10)
+
+        self.descripcionManu()
+
         self.ventana1.mainloop()
+
+    def descripcionManu(self):
+        bDescripcionManu = tk.Button(self.ventana1, text="Soy Manuela Chaverra, \n tengo 20 años, soy estudiante de ingeniería en sistemas de quinto semestre \n y me gusta jugar futbol y compartir tiempo con mi familia en mi tiempo libre", font = 16, command=self.descripcionAnge)
+        bDescripcionManu.place(width=700, x=790, y= 40)
+        #faltan las imagenes
+    
+    def descripcionAnge(self):
+        bDescripcionAnge = tk.Button(self.ventana1, text="Soy Angélika Moya, \n tengo 18 años, soy estudiante de ingeniería en sistemas de tercer semestre \n y me gusta jugar futbol y leer en mi tiempo libre", font = 16, command=self.descripcionJero)
+        bDescripcionAnge.place(width=700, x=790, y= 40)
+
+    def descripcionJero(self):
+        bDescripcionJero = tk.Button(self.ventana1, text="Soy Jerónimo Vásquez, \n tengo 20 años, soy estudiante de ingeniería en sistemas de cuarto semestre \n y me gusta jugar videojuegos en mi tiempo libre", font = 16, command=self.descripcionJuan)
+        bDescripcionJero.place(width=700, x=790, y= 40)
+
+    def descripcionJuan(self):
+        bDescripcionJuan = tk.Button(self.ventana1, text="Soy Juan Estevan Sinitave, tengo 21 años, estudio ingeniería en sistemas, \nvoy en quinto semestre y me gusta escuchar Hip Hop, \nver series y practicar basketball en mi tiempo libre", font = 16, command=self.descripcionManu)
+        bDescripcionJuan.place(width=700, x=790, y= 40)
+
 
     def salirFunc(self):
         self.ventana1.withdraw()
@@ -71,7 +112,7 @@ class VentanaInicial:
     def descripcionFunc(self):
         textoDescripcion = "Un Taller es una aplicación de escritorio diseñada para simplificar las tareas administrativas relacionadas con la reparación de automóviles en un taller mecánico."
         etiqueta = tk.Label(self.ventana1, text=textoDescripcion, borderwidth=2, relief="solid", wraplength=770, font=16)
-        etiqueta.grid(row=2, column=0, sticky='n', padx=10, pady=10)
+        etiqueta.place(width=740, x=10, y= 160)
 
     def ingresarFunc(self):
         self.ventana1.withdraw() # Minimiza la ventana inicial
