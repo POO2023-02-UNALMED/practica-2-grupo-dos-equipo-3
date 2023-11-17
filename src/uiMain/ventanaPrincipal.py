@@ -45,7 +45,7 @@ class VentanaInicial:
     def __init__(self):
         self.ventana1 = tk.Tk()
         self.ventana1.title("Mi Aplicación")
-        self.ventana1.geometry("1500x760+0+5")
+        self.ventana1.geometry("1350x720+60+5")
 
         # Frame superior
         frame_superior = tk.Frame(self.ventana1)
@@ -62,11 +62,11 @@ class VentanaInicial:
 
         global frame_derecha
         frame_derecha = tk.Frame(self.ventana1)
-        frame_derecha.pack(side=tk.RIGHT, fill=tk.Y, padx=10)
+        frame_derecha.pack(side=tk.RIGHT, fill=tk.Y, padx=20)
 
         #Breve descripcion inicial
         texto_breve_descripcion = "Bienvenido al sistema del Taller de Mecanica, en este espacio usted podrá administrar nóminas, inventarios, proveedores y repuestos dependiendo de su categoría de usuario. Garantizamos un acceso seguro y controlado a las diversas funciones y datos del programa"
-        etiqueta_izquierda = tk.Label(frame_izquierda, text=texto_breve_descripcion, borderwidth=2, relief="solid", wraplength=750, font=16, bg = "blue", fg="white" )
+        etiqueta_izquierda = tk.Label(frame_izquierda, text=texto_breve_descripcion, borderwidth=2, relief="solid", wraplength=650, font=10, bg = "blue", fg="white" )
         etiqueta_izquierda.pack(side=tk.LEFT, pady=7)
         
         # Barra de menú
@@ -82,7 +82,7 @@ class VentanaInicial:
         #-------------------------------------------------------
         # Lista de rutas de imágenes
         self.label = tk.Label(self.ventana1)
-        self.label.pack(side=tk.LEFT, pady=7, padx=35)
+        self.label.place(x=8, y= 155)
 
         self.rutas_imagenes = [
             "imTaller1.jpg",
@@ -105,8 +105,9 @@ class VentanaInicial:
 
         # Botón "Ingresar"
         b_ingresar = tk.Button(self.ventana1, text="Ingresar", command=self.ingresarFunc, font=16)
-        b_ingresar.place(width=666, x=35, y=710)
+        b_ingresar.place(width=600, x=25, y=670)
 
+        self.descripcionManu()
         self.ventana1.mainloop()
 
     def cargar_imagen_actual(self):
@@ -125,10 +126,6 @@ class VentanaInicial:
 
         # Cargar y mostrar la nueva imagen
         self.cargar_imagen_actual()
-
-        self.descripcionManu()
-
-        self.ventana1.mainloop()
     
 
     def leerImagen(self, nombreImagen, fila, columna, padx1, pady1 ):
@@ -141,39 +138,39 @@ class VentanaInicial:
 
     def descripcionManu(self):
         bDescripcionManu = tk.Button(self.ventana1, text="Soy Manuela Chaverra, \n tengo 20 años, soy estudiante de ingeniería en sistemas de quinto semestre \n y me gusta jugar futbol y compartir tiempo con mi familia en mi tiempo libre", font = 16, command=self.descripcionAnge)
-        bDescripcionManu.place(width=740, x=750, y= 40)
+        bDescripcionManu.place(width=681, x=645, y= 40)
 
-        self.leerImagen("imManu1.jpeg", 0, 1, 4, 1)
-        self.leerImagen("imManu2.jpeg", 0, 0, 4, 1)
-        self.leerImagen("imManu3.jpeg", 1, 0, 4, 1)
-        self.leerImagen("imManu4.jpeg", 1, 1, 4, 1) 
+        self.leerImagen("imManu1.jpeg", 0, 1, 4, 4)
+        self.leerImagen("imManu2.jpeg", 0, 0, 4, 4)
+        self.leerImagen("imManu3.jpeg", 1, 0, 4, 4)
+        self.leerImagen("imManu4.jpeg", 1, 1, 4, 4) 
     
     def descripcionAnge(self):
         bDescripcionAnge = tk.Button(self.ventana1, text="Soy Angélika Moya, \n tengo 18 años, soy estudiante de ingeniería en sistemas de tercer semestre \n y me gusta jugar futbol y leer en mi tiempo libre", font = 16, command=self.descripcionJero)
-        bDescripcionAnge.place(width=740, x=750, y= 40)
+        bDescripcionAnge.place(width=681, x=645, y= 40)
 
-        self.leerImagen("imAngelika1.jpeg", 0, 1, 4, 1)
-        self.leerImagen("imAngelika2.jpeg", 0, 0, 4, 1)
-        self.leerImagen("imAngelika3.jpeg", 1, 0, 4, 1)
-        self.leerImagen("imAnge4.jpeg", 1, 1, 4, 1) 
+        self.leerImagen("imAngelika1.jpeg", 0, 1, 4, 4)
+        self.leerImagen("imAngelika2.jpeg", 0, 0, 4, 4)
+        self.leerImagen("imAngelika3.jpeg", 1, 0, 4, 4)
+        self.leerImagen("imAngelika4.jpeg", 1, 1, 4, 4) 
 
     def descripcionJero(self):
         bDescripcionJero = tk.Button(self.ventana1, text="Soy Jerónimo Vásquez, \n tengo 20 años, soy estudiante de ingeniería en sistemas de cuarto semestre \n y me gusta jugar videojuegos en mi tiempo libre", font = 16, command=self.descripcionJuan)
-        bDescripcionJero.place(width=740, x=750, y= 40)
+        bDescripcionJero.place(width=681, x=645, y= 40)
 
-        self.leerImagen("imJero1.jpeg", 0, 1, 4, 1)
-        self.leerImagen("imJero2.jpeg", 0, 0, 4, 1)
-        self.leerImagen("imJero3.jpeg", 1, 0, 4, 1)
-        self.leerImagen("imJero4.jpeg", 1, 1, 4, 1)
+        self.leerImagen("imJero1.jpeg", 0, 1, 4, 4)
+        self.leerImagen("imJero2.jpeg", 0, 0, 4, 4)
+        self.leerImagen("imJero3.jpeg", 1, 0, 4, 4)
+        self.leerImagen("imJero4.jpeg", 1, 1, 4, 4)
 
     def descripcionJuan(self):
         bDescripcionJuan = tk.Button(self.ventana1, text="Soy Juan Estevan Sinitave, tengo 21 años, estudio ingeniería en sistemas, \nvoy en quinto semestre y me gusta escuchar Hip Hop, \nver series y practicar basketball en mi tiempo libre", font = 16, command=self.descripcionManu)
-        bDescripcionJuan.place(width=740, x=750, y= 40)
+        bDescripcionJuan.place(width=681, x=645, y= 40)
 
-        self.leerImagen("imJuan1.jpeg", 0, 1, 4, 1)
-        self.leerImagen("imJuan2.jpeg", 0, 0, 4, 1)
-        self.leerImagen("imJuan3.jpeg", 1, 0, 4, 1)
-        self.leerImagen("imJuan4.jpeg", 1, 1, 4, 1)
+        self.leerImagen("imJuan1.jpeg", 0, 1, 4, 4)
+        self.leerImagen("imJuan2.jpeg", 0, 0, 4, 4)
+        self.leerImagen("imJuan3.jpeg", 1, 0, 4, 4)
+        self.leerImagen("imJuan4.jpeg", 1, 1, 4, 4)
 
 
     def salirFunc(self):
@@ -186,9 +183,9 @@ class VentanaInicial:
         etiqueta.grid(row=0, column=0, padx=10, pady=10)
 
     def descripcionFunc(self):
-        textoDescripcion = "Un Taller es una aplicación de escritorio diseñada para simplificar las tareas administrativas\n relacionadas con la reparación de automóviles en un taller mecánico."
-        etiqueta = tk.Label(self.ventana1, text=textoDescripcion, borderwidth=2, relief="solid", wraplength=770, font=16)
-        etiqueta.place(width=690, x=10, y= 160)
+        textoDescripcion = "Un Taller es una aplicación de escritorio diseñada para simplificar\n las tareas administrativas\n relacionadas con la reparación de automóviles en un taller mecánico."
+        etiqueta = tk.Label(self.ventana1, text=textoDescripcion, borderwidth=2, relief="solid", wraplength=800, font=16)
+        etiqueta.place(width=600, x=10, y= 160)
 
     def ingresarFunc(self):
         self.ventana1.withdraw() # Minimiza la ventana inicial
