@@ -41,13 +41,15 @@ class FieldFrame(tk.Frame):
         self.valores = [entry.get() for entry in self.winfo_children() if isinstance(entry, tk.Entry)]
         ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
         print(self.valores)
-        self.ventana_usuario.actualizar_label(self.valores)
+
+        if self.ventana_usuario.idFun == 0:
+            self.ventana_usuario.actualizar_label()
         
         ##metan lo suyo en donde va que después nos confundimos todos 
         #los tqm 
         
         ###########todo funcionalidad 1
-        if self.ventana_usuario.idFun == 1:
+        elif self.ventana_usuario.idFun == 1:
             self.ventana_usuario.funciionalidad1_1()
         
         ###########todo funcionalidad 2
@@ -71,6 +73,15 @@ class FieldFrame(tk.Frame):
 
         elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
             self.ventana_usuario.funcionalidad4_2Mecanicos()
+
+        elif self.ventana_usuario.idFun == 4.21: 
+            self.ventana_usuario.funcionalidad4_2RepuestosFinal(self.valores)
+        
+        elif self.ventana_usuario.idFun == 4.22: 
+            self.ventana_usuario.funcionalidad4_2MecanicosFinal(self.valores)
+        
+        elif self.ventana_usuario.idFun == 4.3:
+            self.ventana_usuario.funcionalidad4_3()
         
         ###########todo funcionalidad 5
         
@@ -344,24 +355,8 @@ class VentanaUsuario:
 
         self.idFun = 5
 
-    def actualizar_label(self, valores):
-        if self.idFun == 1:
-            self.label2.config(text=f"V {valores[0]}")
-        
-        elif self.idFun ==2: 
-            self.label2.config(text=f"VIVA EL QUESO CARAJO {valores[0]}")
-
-        elif self.idFun == 3:
-            self.label2.config(text=f";DD {valores[0]}")
-
-        elif self.idFun == 4:
-            self.label2.config(text=f"NO SE Q PONER ACÁ {valores[0]}")
-
-        elif self.idFun == 5:
-            self.label2.config(text=f"ESOOOO {valores[0]}")
-
-        else: 
-            self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
+    def actualizar_label(self):
+        self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
 
         
 
