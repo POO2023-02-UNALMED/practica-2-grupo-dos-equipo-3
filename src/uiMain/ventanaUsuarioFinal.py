@@ -42,9 +42,26 @@ class FieldFrame(tk.Frame):
         ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
         print(self.valores)
         self.ventana_usuario.actualizar_label(self.valores)
+
+        #todo funcionalidad 4
+        if self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
+            self.ventana_usuario.funcionalidad4_1()
+
+        elif self.ventana_usuario.idFun == 4.1:
+            self.ventana_usuario.funcionalidad4_1Final(self.valores)
+                
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "2" :
+            self.ventana_usuario.funcionalidad4_2()
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "1": 
+            self.ventana_usuario.funcionalidad4_2Repuestos()
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
+            self.ventana_usuario.funcionalidad4_2Mecanicos()
         
-        if self.ventana_usuario.idFun == 1:
+        elif self.ventana_usuario.idFun == 1:
             self.ventana_usuario.funciionalidad1_1()
+        
         elif self.ventana_usuario.idFun == 3:
             self.ventana_usuario.funcionalidad3_1(self.valores[0])
         
@@ -217,6 +234,88 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
 
         self.idFun = 4
+
+    def funcionalidad4_1(self):
+        #Logica para encontrar el servicio con mas ingresos
+        self.label2.config(text="El resultado con mas ingresos fue:\n Ingresa el valor de comisión \nque deseas dar a los mecanicos \nen caso tal")
+
+        criterios_nuevos = ["Elección"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 4.1
+
+    def funcionalidad4_1Final(self, valores):
+        self.frame2.destroy()
+        self.label2.config(text=f"Le has subido el precio a los repuestos en:\n{valores[0]} unidades")
+    
+    def funcionalidad4_2(self):
+        #Lógica para obtener el servicio con menos ingresos 
+        self.label2.config(text="El servicio con menos ingresos fue:\n ¿que deseas hacer?\n1)Aumentar precio repuestos\n2)Disminuir comisiones a los mecanicos")
+
+        criterios_nuevos = ["Elección"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 4.2
+
+    def funcionalidad4_2Repuestos(self):
+        #Lógica para aumentar el precio de los repuestos
+        self.label2.config(text="En cuanto desea aumentar el precio de los repuestos?")
+
+        criterios_nuevos = ["Elección"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 4.21
+    
+    def funcionalidad4_2RepuestosFinal(self, valores):
+        self.frame2.destroy()
+        self.label2.config(text=f"Le has subido el precio a los repuestos en:\n{valores[0]} unidades")
+
+    def funcionalidad4_2Mecanicos(self):
+        #Lógica para disminuir comision de los mecanicos
+        self.label2.config(text="En cuanto desea disminuir la comisión de los mecanicos?")
+
+        criterios_nuevos = ["Elección"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 4.22
+    
+    def funcionalidad4_2MecanicosFinal(self, valores):
+        self.frame2.destroy()
+        self.label2.config(text=f"Le has diminuido la comision a los mecanicos en:\n{valores[0]} unidades")
+    
+
+    def funcionalidad4_3(self):
+        #Lógica para obtener el servicio con menos ingresos 
+        self.frame2.destroy()
+        self.label2.config(text="Este es su resumen general: ")
+        
+        
+        self.idFun = 4.3
+        
 
     def funcionalidad5(self):
         self.label1.config(text="Realizar encuesta", font=("Arial", 16))
