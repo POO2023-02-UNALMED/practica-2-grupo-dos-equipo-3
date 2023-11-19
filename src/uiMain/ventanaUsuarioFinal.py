@@ -1,6 +1,7 @@
 #ESTA ES LA BUENA BUENA 
 #BUENA BUENA BUENA
 import tkinter as tk
+from tkinter import ttk
 
 class FieldFrame(tk.Frame):
     def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
@@ -44,11 +45,9 @@ class FieldFrame(tk.Frame):
         
         if self.ventana_usuario.idFun == 1:
             self.ventana_usuario.funciionalidad1_1()
+        elif self.ventana_usuario.idFun == 3:
+            self.ventana_usuario.funcionalidad3_1(self.valores[0])
         
-        
-
-
-
 
     def borrar(self):
         # Poner los valores en blanco o vacío
@@ -132,11 +131,11 @@ class VentanaUsuario:
         self.idFun = 1
 
     def funciionalidad1_1(self):
-        self.label1.config(text="LABELSU¨PREMOS", font=("Arial", 16))
+        self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
-        criterios_nuevos = ["Nombre", "Vehiculo"]
-        valores_iniciales_nuevos = ["Generico/Deluxe",""]
+        criterios_nuevos = ["Tipo de daño","Nombre mecanico"]
+        valores_iniciales_nuevos = ["Motor/Frenos",""]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -145,7 +144,6 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1
-
 
 
     def funcionalidad2(self):
@@ -178,7 +176,32 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 3
-    
+        
+    def funcionalidad3_1(self, categoriaDada):
+        self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
+        
+        respuestosD = ""
+        indice = 1
+        if categoriaDada == "Deluxe":
+            #llenar respuestosD con admin
+            pass
+        elif categoriaDada == "Generico":
+            #llenar respuestosD con admin
+            pass
+        
+        self.label2.config(text="Escoja respuestos: " + respuestosD)
+        
+        criterios_nuevos = ["Repuesto", "Proveedor"]
+        valores_iniciales_nuevos = ["", ""]
+        habilitado_nuevos = [True, True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+            
+        
     def funcionalidad4(self):
         self.label1.config(text="Generar resumen financiero", font=("Arial", 16))
         self.label2.config(text="¿Que resumen deseas hacer?\n1)Menos ingresos\n2)Mas ingresos\n3)Total")
