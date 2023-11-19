@@ -42,9 +42,22 @@ class FieldFrame(tk.Frame):
         ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
         print(self.valores)
         self.ventana_usuario.actualizar_label(self.valores)
-
-        #todo funcionalidad 4
-        if self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
+        
+        ##metan lo suyo en donde va que después nos confundimos todos 
+        #los tqm 
+        
+        ###########todo funcionalidad 1
+        if self.ventana_usuario.idFun == 1:
+            self.ventana_usuario.funciionalidad1_1()
+        
+        ###########todo funcionalidad 2
+        
+        ###########todo funcionalidad 3
+        elif self.ventana_usuario.idFun == 3:
+            self.ventana_usuario.funcionalidad3_1(self.valores[0])
+        
+        ###########todo funcionalidad 4
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
             self.ventana_usuario.funcionalidad4_1()
 
         elif self.ventana_usuario.idFun == 4.1:
@@ -59,11 +72,9 @@ class FieldFrame(tk.Frame):
         elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
             self.ventana_usuario.funcionalidad4_2Mecanicos()
         
-        elif self.ventana_usuario.idFun == 1:
-            self.ventana_usuario.funciionalidad1_1()
+        ###########todo funcionalidad 5
         
-        elif self.ventana_usuario.idFun == 3:
-            self.ventana_usuario.funcionalidad3_1(self.valores[0])
+        
         
 
     def borrar(self):
