@@ -1,10 +1,14 @@
-##ESTE NO XD
-##ESTE LO DEJO POR SI LLEGO A CAGARLA EN ALGÚN LADO EN EL OTRO 
+#ESTA ES LA BUENA BUENA 
+#BUENA BUENA BUENA
 import tkinter as tk
 
 class FieldFrame(tk.Frame):
-    def __init__(self, tituloCriterios, criterios, tituloValores, valores, habilitado):
+    def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
         super().__init__()
+
+        self.ventana_usuario = ventana_usuario
+        self.criterios = criterios
+        self.valores = valores
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -24,35 +28,57 @@ class FieldFrame(tk.Frame):
 
             entry.grid(row=i, column=1, padx=5, pady=5, sticky="w")
 
-    def getValue(self, criterio):
-        # Obtener el valor del Entry correspondiente al criterio proporcionado
-        for child in self.winfo_children():
-            if isinstance(child, tk.Entry) and child.get().startswith(f"{self.tituloCriterios}: {criterio}"):
-                return child.get()
+        # Botones Aceptar y Borrar
+        self.boton_aceptar = tk.Button(self, text="Aceptar", command=self.aceptar)
+        self.boton_borrar = tk.Button(self, text="Borrar", command=self.borrar)
+
+        self.boton_aceptar.grid(row=len(criterios), column=0, pady=5)
+        self.boton_borrar.grid(row=len(criterios), column=1, pady=5)
+
+    def aceptar(self):
+        # Guardar los valores en las variables correspondientes
+        self.valores = [entry.get() for entry in self.winfo_children() if isinstance(entry, tk.Entry)]
+        ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
+        print(self.valores)
+        self.ventana_usuario.actualizar_label(self.valores)
+        
+        if self.ventana_usuario.idFun == 1:
+            self.ventana_usuario.funciionalidad1_1()
+
+
+
+
+    def borrar(self):
+        # Poner los valores en blanco o vacío
+        for entry in self.winfo_children():
+            if isinstance(entry, tk.Entry):
+                entry.delete(0, "end")
 
 class VentanaUsuario:
     def __init__(self):
         self.ventana1 = tk.Tk()
-        self.ventana1.title("Ejemplo grid")
+        self.ventana1.title("UNTaller")
         self.ventana1.geometry("500x390")
 
         self.frame = tk.Frame(self.ventana1, width=400, height=200)
         self.frame.pack(expand=True)
 
-        self.label1 = tk.Label(self.frame, text="¡Bienvenido a UNTAller!",font=("Arial", 16))
+        self.label1 = tk.Label(self.frame, text="¡Bienvenido a UNTAller!", font=("Arial", 16))
         self.label2 = tk.Label(self.frame, text="¿Cuál será tu petición el día de hoy?")
         self.label1.grid(row=0, column=0, padx=20, pady=20, sticky="ns")
         self.label2.grid(row=1, column=0, padx=20, pady=30, sticky="ns")
-        
-        self.criterios = ["Código", "Nombre", "Descripción", "Ubicación"]
-        self.valores_iniciales = ["001", "Producto A", "Descripción del producto", "Almacén 1"]
-        self.habilitado = [True, True, True, True]  # True significa editable, False no editable
-        self.frame2 = FieldFrame("Criterio", self.criterios, "Valor", self.valores_iniciales, self.habilitado)
+
+        self.criterios = ["", "", "", ""]
+        self.valores_iniciales = ["", "", "", ""]
+        self.habilitado = [False, False, False, False]  # True significa editable, False no editable
+        self.frame2 = FieldFrame(self, "Criterio", self.criterios, "Valor", self.valores_iniciales, self.habilitado)
         self.frame2.pack(padx=10, pady=10)
 
         menubar1 = tk.Menu(self.frame)
         self.ventana1.config(menu=menubar1)
 
+        self.idFun = 0
+        
         opciones1 = tk.Menu(menubar1, tearoff=0)
         menubar1.add_cascade(label="Archivo", menu=opciones1)
         opciones1.add_command(label="Aplicación", command=self.aplicacion)
@@ -92,82 +118,117 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
-    
-        criterios_nuevos = ["Nombre", "Vehiculo", "Auto"]
-        valores_iniciales_nuevos = ["", "", ""]
-        habilitado_nuevos = [True, True, True]
+        criterios_nuevos = ["Nombre", "Vehiculo"]
+        valores_iniciales_nuevos = ["Generico/Deluxe",""]
+        habilitado_nuevos = [True, True]
 
-        nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
-    
-        self.frame2.destroy()  
-        self.frame2 = nuevo_frame2  
-        self.frame2.pack(padx=10, pady=10)  
-        #Mi idea es que se acualice el frame dependiendo de los datos y volver así 
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 1
 
-        
-        
+    def funciionalidad1_1(self):
+        self.label1.config(text="LABELSU¨PREMOS", font=("Arial", 16))
+        self.label2.config(text="Ingresa, que deseas hacer hoy")
+
+        criterios_nuevos = ["Nombre", "Vehiculo"]
+        valores_iniciales_nuevos = ["Generico/Deluxe",""]
+        habilitado_nuevos = [True, True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 1
+
+
 
     def funcionalidad2(self):
-        self.label1.config(text="Realizar servicio",font=("Arial", 16))
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
         self.label2.config(text="Mecanico, ¡ingresa los pasos correctos!")
 
         criterios_nuevos = ["Nombre", "Numero Orden"]
         valores_iniciales_nuevos = ["001", "Producto A"]
         habilitado_nuevos = [True, True]
 
-        nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
-   
-        self.frame2.destroy()  
-        self.frame2 = nuevo_frame2  
-        self.frame2.pack(padx=10, pady=10)  
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
-        #Mi idea es la misma acá 
-    
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 2
+
     def funcionalidad3(self):
-        self.label1.config(text="Solicitar repuestos",font=("Arial", 16))
+        self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
         self.label2.config(text="Dime, ¿que deseas pedir?")
 
         criterios_nuevos = ["Categoria", "Tipo de daño"]
         valores_iniciales_nuevos = ["Deluxe/Generico", "Producto"]
         habilitado_nuevos = [True, True]
 
-        nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 3
     
-        self.frame2.destroy()  
-        self.frame2 = nuevo_frame2  
-        self.frame2.pack(padx=10, pady=10)  
-
     def funcionalidad4(self):
-        self.label1.config(text="Generar resumen financiero",font=("Arial", 16))
+        self.label1.config(text="Generar resumen financiero", font=("Arial", 16))
         self.label2.config(text="¿Que resumen deseas hacer?\n1)Menos ingresos\n2)Mas ingresos\n3)Total")
 
         criterios_nuevos = ["Elección"]
         valores_iniciales_nuevos = ["0"]
         habilitado_nuevos = [True]
 
-        nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
-    
-        self.frame2.destroy()  
-        self.frame2 = nuevo_frame2  
-        self.frame2.pack(padx=10, pady=10)  
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 4
 
     def funcionalidad5(self):
-        self.label1.config(text="Realizar encuesta",font=("Arial", 16))
+        self.label1.config(text="Realizar encuesta", font=("Arial", 16))
         self.label2.config(text="¡Tu opinion nos ayudara a mejorar!")
 
         criterios_nuevos = ["Nombre", "Mecanico"]
         valores_iniciales_nuevos = ["Raul", "Fernando Miguel"]
         habilitado_nuevos = [True, True]
 
-        nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
-    
-        self.frame2.destroy()  
-        self.frame2 = nuevo_frame2  
-        self.frame2.pack(padx=10, pady=10)  
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5
+
+    def actualizar_label(self, valores):
+        if self.idFun == 1:
+            self.label2.config(text=f"V {valores[0]}")
+        
+        elif self.idFun ==2: 
+            self.label2.config(text=f"VIVA EL QUESO CARAJO {valores[0]}")
+
+        elif self.idFun == 3:
+            self.label2.config(text=f";DD {valores[0]}")
+
+        elif self.idFun == 4:
+            self.label2.config(text=f"NO SE Q PONER ACÁ {valores[0]}")
+
+        elif self.idFun == 5:
+            self.label2.config(text=f"ESOOOO {valores[0]}")
+
+        else: 
+            self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
+
+        
 
 if __name__ == "__main__":
     VentanaUsuario()

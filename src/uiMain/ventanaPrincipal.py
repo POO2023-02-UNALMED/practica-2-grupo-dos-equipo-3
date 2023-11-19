@@ -193,6 +193,8 @@ class VentanaInicial:
         MiAplicacion(ventana_principal)
         ventana_principal.mainloop()
 
+    
+
 if __name__ == "__main__":
     VentanaInicial()
     

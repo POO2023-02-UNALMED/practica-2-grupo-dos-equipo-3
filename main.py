@@ -1,3 +1,5 @@
+from src.gestorAplicacion.cliente.Clientes import Clientes
+from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 from src.gestorAplicacion.cliente.TipoDaño import TipoDaño
 
 from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
@@ -7,6 +9,7 @@ from src.gestorAplicacion.tallerMecanica.RepuestosGenericos import RepuestosGene
 from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import RepuestosDeluxe
 from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
+
 
 admin = Administrador()
 

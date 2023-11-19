@@ -113,8 +113,13 @@ class VentanaUsuario:
         nuevo_frame2 = FieldFrame("Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
         self.frame2.destroy()
+        
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
+
+        self.label2.config(text=self.frame2.valores[0])
+
+        
 
     def funcionalidad2(self):
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
@@ -171,6 +176,10 @@ class VentanaUsuario:
         self.frame2.destroy()
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
+
+    def actualizar_label(self, valores):
+        # Actualizar el label con los valores ingresados
+        self.label2.config((valores))
 
 if __name__ == "__main__":
     VentanaUsuario()

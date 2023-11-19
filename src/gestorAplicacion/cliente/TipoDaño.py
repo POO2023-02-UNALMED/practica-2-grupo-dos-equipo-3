@@ -1,4 +1,4 @@
-from Vehiculo import Vehiculo
+from cliente.Vehiculo import Vehiculo
 
 class TipoDaño:
     tiposDeDaño = []
