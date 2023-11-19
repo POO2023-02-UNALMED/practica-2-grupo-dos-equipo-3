@@ -1,5 +1,5 @@
-from Administrador import Administrador
-from Orden import Orden
+from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
+from src.gestorAplicacion.tallerMecanica.Orden import Orden
 
 class Mecanicos:
     serialVersionUID = 1

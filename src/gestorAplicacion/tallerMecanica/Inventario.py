@@ -1,7 +1,7 @@
-from Administrador import Administrador
-from RepuestosDeluxe import repuestoDeluxe
-from RepuestosGenericos import RepuestosGenericos
-from PreciosBase import preciosBase
+from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
+from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import repuestoDeluxe
+from src.gestorAplicacion.tallerMecanica.RepuestosGenericos import RepuestosGenericos
+from src.gestorAplicacion.tallerMecanica.PreciosBase import preciosBase
 
 class Inventario():
 

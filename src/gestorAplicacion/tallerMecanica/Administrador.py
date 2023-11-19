@@ -1,4 +1,4 @@
-from Orden import Orden
+from src.gestorAplicacion.tallerMecanica.Orden import Orden
 
 class Administrador:
     serialVersionUID = 1

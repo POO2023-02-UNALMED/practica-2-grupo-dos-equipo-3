@@ -1,8 +1,8 @@
-from cliente.Vehiculo import Vehiculo
-from tallerMecanica.Administrador import Administrador
-from tallerMecanica.Mecanicos import Mecanicos
-from tallerMecanica.Orden import Orden
-from CalificaciónMecanico import CalificaciónMecanico
+from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
+from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
+from src.gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
+from src.gestorAplicacion.tallerMecanica.Orden import Orden
+from src.gestorAplicacion.cliente.CalificaciónMecanico import CalificaciónMecanico
 
 class Clientes(CalificaciónMecanico):
     serialVersionUID = 1

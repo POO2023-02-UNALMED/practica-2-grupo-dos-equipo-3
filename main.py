@@ -1,7 +1,6 @@
 from src.gestorAplicacion.cliente.Clientes import Clientes
 from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 from src.gestorAplicacion.cliente.TipoDaño import TipoDaño
-
 from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
 from src.gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
 from src.gestorAplicacion.tallerMecanica.Proveedor import Proveedor

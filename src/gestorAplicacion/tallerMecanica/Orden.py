@@ -1,8 +1,8 @@
 import datetime
-from cliente.Clientes import Clientes
-from cliente.Vehiculo import Vehiculo
-from Administrador import Administrador
-from Mecanicos import Mecanicos
+from src.gestorAplicacion.cliente.Clientes import Clientes
+from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
+from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
+from src.gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
 
 class Orden:
     serialVersionUID = 1
