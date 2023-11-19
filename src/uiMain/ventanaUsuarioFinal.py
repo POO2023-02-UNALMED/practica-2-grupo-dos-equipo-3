@@ -44,6 +44,8 @@ class FieldFrame(tk.Frame):
         
         if self.ventana_usuario.idFun == 1:
             self.ventana_usuario.funciionalidad1_1()
+        
+        
 
 
 
