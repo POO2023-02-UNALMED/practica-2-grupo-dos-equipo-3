@@ -1,8 +1,9 @@
 #ESTA ES LA BUENA BUENA 
 #BUENA BUENA BUENA
+
 import tkinter as tk
-#from src.gestorAplicacion.cliente.Clientes import Clientes
-#from gestorAplicacion.cliente.Vehiculo import Vehiculo
+
+
 
 class FieldFrame(tk.Frame):
     def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
@@ -57,6 +58,7 @@ class FieldFrame(tk.Frame):
         
         elif self.ventana_usuario.idFun == 1.1:
             self.ventana_usuario.funcionalidad1_2(self._clienteCreado, self.valores)
+        
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
             self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
@@ -405,9 +407,19 @@ class VentanaUsuario:
     
 
     def funcionalidad4_3(self):
-        #Lógica para obtener el servicio con menos ingresos 
         self.frame2.destroy()
-        self.label2.config(text="Este es su resumen general: ")
+        admin.finanzas()
+        
+        self.label2.config(text=f"Este es el resumen general de su taller:\n "
+                       f"Cartera final: {admin.getInventario().getCartera_inicial()}\n "
+                       f"Gastos: {admin.getInventario().getGastos()}\n "
+                       f"Ingresos: {admin.getInventario().getIngresos()}\n "
+                       f"Numero de Ordenes: {admin.numOrdenes()}\n "
+                       f"Numero de mecanicos: {admin.getMecanicos().size()}\n "
+                       f"Servicio menos rentable: {admin.ordenMasRentable()}\n "
+                       f"Servicio mas rentable: {admin.ordenMenosRentable()} \n "
+                       f"Calificación del taller: {admin.getCalificacionTaller()}")
+
         
         
         self.idFun = 4.3
