@@ -11,7 +11,7 @@ class FieldFrame(tk.Frame):
         self.ventana_usuario = ventana_usuario
         self.criterios = criterios
         self.valores = valores
-        
+                
         self._clienteCreado = None
 
         # Crear etiquetas y campos usando Grid
@@ -58,6 +58,13 @@ class FieldFrame(tk.Frame):
         elif self.ventana_usuario.idFun == 1.1:
             self.ventana_usuario.funcionalidad1_2(self._clienteCreado, self.valores)
         ###########todo funcionalidad 2
+        elif self.ventana_usuario.idFun == 2:
+            self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+
+        elif self.ventana_usuario.idFun == 2.1:
+            self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
+            
+
         
         ###########todo funcionalidad 3
         elif self.ventana_usuario.idFun == 3:
@@ -200,14 +207,14 @@ class VentanaUsuario:
         cliente.getVehiculos()[0].setTipoDeDanio(valores[0], None) #setTipoDeDanio(valores[0], admin)
         
         self.label2.config(text="Repuestos disponibles: \n")
-        
 
+        
     def funcionalidad2(self):
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
-        self.label2.config(text="Mecanico, ¡ingresa los pasos correctos!")
+        self.label2.config(text="Mecanico, identificate y escribe el numero de orden que quieres realizar")
 
         criterios_nuevos = ["Nombre", "Numero Orden"]
-        valores_iniciales_nuevos = ["001", "Producto A"]
+        valores_iniciales_nuevos = ["", ""]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -217,6 +224,56 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
 
         self.idFun = 2
+
+    def funcionalidad2_1(self, nombreMecanico, numeroOrden):
+        """falta describir la orden"""
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
+        self.label2.config(text=nombreMecanico +", de acuerdo a la descripcion de la orden ingresa los pasos correctos\n"+numeroOrden)
+
+        criterios_nuevos = ["primer numero", "segundo numero", "tercer numero", "cuarto numero", "quinto numero"]
+        valores_iniciales_nuevos = ["", "", "", "", ""]
+        habilitado_nuevos = [True, True, True, True, True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 2.1
+        
+    def funcionalidad2_2(self, val1, val2, val3, val4, val5):
+        # Cambiar el orden para configurar las etiquetas después de destruir y recrear el frame
+        print("valor 1 "+ val1 + " |valor2 "+ val2 +" |valor3 "+ val3 +" |valor4 "+ val4 + " |valor5 "+val5 )
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
+        correcto = "12345"
+        if val1 + val2 + val3 + val4 + val5 == correcto:
+            self.label2.config(text="usted ha ganado -5000-\n ha reparado el vehiculo ¿le gustaria hacer algo más?")
+            criterios_nuevos = ["1.Consultar ordenes realizadas", "2.Consultar comisiones"]
+            valores_iniciales_nuevos = ["si/no", "si/no"]
+            habilitado_nuevos = [True, True]
+            nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+            self.frame2.destroy()
+            self.frame2 = nuevo_frame2
+            self.frame2.pack(padx=10, pady=10)
+        else:
+            self.label2.config(text="se ha equivocado en el orden de los pasos y ha generado un error de tipo -carroceria-\nintentelo de nuevo")
+            self.funcionalidad2_21()
+
+    def funcionalidad2_21(self):
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
+        #self.label2.config(text=nombreMecanico +", de acuerdo a la descripcion de la orden ingresa los pasos correctos\n"+numeroOrden)
+
+        criterios_nuevos = ["primer numero", "segundo numero", "tercer numero", "cuarto numero", "quinto numero"]
+        valores_iniciales_nuevos = ["", "", "", "", ""]
+        habilitado_nuevos = [True, True, True, True, True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        
 
     def funcionalidad3(self):
         self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
