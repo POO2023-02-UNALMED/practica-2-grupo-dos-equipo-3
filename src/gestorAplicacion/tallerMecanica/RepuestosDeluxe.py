@@ -1,4 +1,5 @@
-from Repuestos import Repuestos
+from src.gestorAplicacion.tallerMecanica.Repuestos import Repuestos
+
 class RepuestosDeluxe(Repuestos):
 
     def __init__(self):

@@ -1,4 +1,4 @@
-from cliente.Vehiculo import Vehiculo
+from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 
 class TipoDaño:
     tiposDeDaño = []

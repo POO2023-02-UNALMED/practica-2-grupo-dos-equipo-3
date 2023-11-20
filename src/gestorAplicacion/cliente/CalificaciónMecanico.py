@@ -1,6 +1,5 @@
 from abc import ABC,abstractclassmethod
 
-
 class CalificacionMecanico(ABC):
     
     @abstractclassmethod

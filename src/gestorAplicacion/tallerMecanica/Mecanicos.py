@@ -1,5 +1,4 @@
 from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
-from src.gestorAplicacion.tallerMecanica.Orden import Orden
 
 class Mecanicos:
     serialVersionUID = 1
@@ -102,7 +101,7 @@ class Mecanicos:
     def recibirComision(self, comision):
         self._comisiones = self._comisiones + comision
         
-    def reparar(self, orden:Orden, pasos, admin:Administrador):
+    def reparar(self, orden, pasos, admin:Administrador):
         claveMotor1 = 15432
         claveMotor2 = 12354
         claveFrenos1 = 13425

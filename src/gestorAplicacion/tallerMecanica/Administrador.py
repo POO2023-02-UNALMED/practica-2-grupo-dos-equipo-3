@@ -1,5 +1,3 @@
-from src.gestorAplicacion.tallerMecanica.Orden import Orden
-
 class Administrador:
     serialVersionUID = 1
     def __init__(self, nombre="", id=0,inventario=None) -> None:
@@ -107,34 +105,34 @@ class Administrador:
             elif (self._mecanicosDisponibles[i].getNombre() == nombre and self._mecanicosDisponibles[i].getAfinidad() == "Carro"):
                 self._mecanicosDisponibles[i].recibirComision(8000)
 
-    def generarResumenMasIngresosOpcion1(self, ordenMasRentable:Orden, aumento:int):
+    def generarResumenMasIngresosOpcion1(self, ordenMasRentable, aumento:int):
         ordenMasRentable.setPrecio(ordenMasRentable.getPrecio() + aumento)
 	
-    def generarResumenMasIngresosOpcion2Deluxe(self, ordenMasRentable:Orden, aumento:int, tipoRepuesto:str):
+    def generarResumenMasIngresosOpcion2Deluxe(self, ordenMasRentable, aumento:int, tipoRepuesto:str):
         repuestoDeluxe = ordenMasRentable.getAdmin().getInventario().getRepuestosDeluxe()
         repuestoDeluxe.aumentarPrecio(aumento, tipoRepuesto)
 	
-    def generarResumenMasIngresosOpcion2Generico(self, ordenMasRentable:Orden, aumento, tipoRepuesto):
+    def generarResumenMasIngresosOpcion2Generico(self, ordenMasRentable, aumento, tipoRepuesto):
         repuestoGenerico = ordenMasRentable.getAdmin().getInventario().getRepuestosGenericos()
         repuestoGenerico.aumentarPrecio(aumento, tipoRepuesto)
 
-    def generarResumenMasIngresosOpcion3(self, ordenMasRentable:Orden, aumento):
+    def generarResumenMasIngresosOpcion3(self, ordenMasRentable, aumento):
         mecanico = ordenMasRentable.getMecanico()
         mecanico.setComisiones(mecanico.getComisiones()+ aumento)
 	
-    def generarResumenMenosIngresosOpcion1(self, ordenMenosRentable:Orden, desaumento):
+    def generarResumenMenosIngresosOpcion1(self, ordenMenosRentable, desaumento):
         if desaumento <= ordenMenosRentable.getPrecio():
             ordenMenosRentable.setPrecio(ordenMenosRentable.getPrecio() - desaumento)
 	
-    def generarResumenMenosIngresosOpcion2Deluxe(self,ordenMenosRentable:Orden, desaumento, tipoRepuesto):
+    def generarResumenMenosIngresosOpcion2Deluxe(self,ordenMenosRentable, desaumento, tipoRepuesto):
         repuestoDeluxe = ordenMenosRentable.getAdmin().getInventario().getRepuestosDeluxe()
         repuestoDeluxe.disminuirPrecio(desaumento, tipoRepuesto)
 	
-    def generarResumenMenosIngresosOpcion2Generico(self, ordenMasRentable:Orden, desaumento, tipoRepuesto):
+    def generarResumenMenosIngresosOpcion2Generico(self, ordenMasRentable, desaumento, tipoRepuesto):
         repuestoGenerico = ordenMasRentable.getAdmin().getInventario().getRepuestosGenericos()
         repuestoGenerico.disminuirPrecio(desaumento, tipoRepuesto)
 	
-    def generarResumenMenosIngresosOpcion3(self, ordenMasRentable:Orden, desaumento):
+    def generarResumenMenosIngresosOpcion3(self, ordenMasRentable, desaumento):
         mecanico = ordenMasRentable.getMecanico()
         if desaumento <= mecanico.getComisiones():
             mecanico.setComisiones(mecanico.getComisiones() - desaumento)

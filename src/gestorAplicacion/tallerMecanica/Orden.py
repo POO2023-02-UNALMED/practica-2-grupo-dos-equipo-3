@@ -1,5 +1,4 @@
 import datetime
-from src.gestorAplicacion.cliente.Clientes import Clientes
 from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
 from src.gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
@@ -10,7 +9,7 @@ class Orden:
     numOrdenes = 0
     ordenesTotales = []
  
-    def __init__(self,tipo:str,cliente:Clientes, mecanico:Mecanicos, admin:Administrador, vehiculo:Vehiculo,precio):	
+    def __init__(self,tipo:str,cliente, mecanico:Mecanicos, admin:Administrador, vehiculo:Vehiculo,precio):	
         self._tipo = tipo
         self._cliente = cliente
         self._mecanico = mecanico

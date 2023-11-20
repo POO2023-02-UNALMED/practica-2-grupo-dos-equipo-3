@@ -1,4 +1,4 @@
-from Repuestos import Repuestos
+from src.gestorAplicacion.tallerMecanica.Repuestos import Repuestos
 
 class RepuestosGenericos(Repuestos):
 

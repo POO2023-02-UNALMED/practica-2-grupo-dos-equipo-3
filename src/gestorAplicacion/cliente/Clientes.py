@@ -2,9 +2,9 @@ from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 from src.gestorAplicacion.tallerMecanica.Administrador import Administrador
 from src.gestorAplicacion.tallerMecanica.Mecanicos import Mecanicos
 from src.gestorAplicacion.tallerMecanica.Orden import Orden
-from src.gestorAplicacion.cliente.CalificaciónMecanico import CalificaciónMecanico
+from src.gestorAplicacion.cliente.CalificaciónMecanico import CalificacionMecanico
 
-class Clientes(CalificaciónMecanico):
+class Clientes(CalificacionMecanico):
     serialVersionUID = 1
     asignadorId = 0
     clientes = []
