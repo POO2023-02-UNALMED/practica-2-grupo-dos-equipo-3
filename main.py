@@ -446,15 +446,16 @@ class VentanaUsuario:
             self.label1.config(text=f"Esperamos pronto haga una nueva consulta :)", font=("Arial",16))
             
         else:
+            comision = int(valores[0])
             mecanicosAumentar = list()
             if admin.ordenMasRentable() == "Reparación de Carros":
                mecanicosAumentar = admin.obtenerMecanicosAfines("Carro")
         
             elif admin.ordenMasRentable() == "Reparación de Motos":
-                mecanicosAumentar = admin.obtenerMecanicosAfines("Carro")
+                mecanicosAumentar = admin.obtenerMecanicosAfines("Moto")
         
             for i in mecanicosAumentar:
-                mecanicosAumentar[i].recibirComision(valores[0])
+                mecanicosAumentar[i].recibirComision(comision)
 
             self.label2.config(text=f"Le has dado un aumento de comisión a los mecanicos en:\n{valores[0]} unidades")
 
@@ -465,7 +466,7 @@ class VentanaUsuario:
         self.label2.config(text="El servicio con menos ingresos fue:\n ¿que deseas hacer?\n1)Aumentar precio repuestos\n2)Disminuir comisiones a los mecanicos")
 
         criterios_nuevos = ["Elección"]
-        valores_iniciales_nuevos = ["0"]
+        valores_iniciales_nuevos = ["1/2"]
         habilitado_nuevos = [True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -479,7 +480,7 @@ class VentanaUsuario:
         #Lógica para aumentar el precio de los repuestos
         self.label2.config(text="En cuanto desea aumentar el precio de los repuestos?")
 
-        criterios_nuevos = ["Elección"]
+        criterios_nuevos = ["Aumento"]
         valores_iniciales_nuevos = ["0"]
         habilitado_nuevos = [True]
 
@@ -492,13 +493,25 @@ class VentanaUsuario:
     
     def funcionalidad4_2RepuestosFinal(self, valores):
         self.frame2.destroy()
+        aumento = int(valores[0])
+        admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Motor")
+        admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Frenos")
+        admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Electrico")
+        admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Llantas")
+        admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Carroceria")
+        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Motor")
+        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Frenos")
+        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Electrico")
+        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Llantas")
+        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Carroceria")
+        
         self.label2.config(text=f"Le has subido el precio a los repuestos en:\n{valores[0]} unidades")
 
     def funcionalidad4_2Mecanicos(self):
         #Lógica para disminuir comision de los mecanicos
         self.label2.config(text="En cuanto desea disminuir la comisión de los mecanicos?")
 
-        criterios_nuevos = ["Elección"]
+        criterios_nuevos = ["Disminución"]
         valores_iniciales_nuevos = ["0"]
         habilitado_nuevos = [True]
 
@@ -510,6 +523,18 @@ class VentanaUsuario:
         self.idFun = 4.22
     
     def funcionalidad4_2MecanicosFinal(self, valores):
+        mecanicosDisminuir = list() 
+        disminucion = int(valores[0]) * -1
+        
+        if admin.ordenMenosRentable == "Reparación de Carros":
+            mecanicosDisminuir = admin.obtenerMecanicosAfines("Carro")
+        
+        elif admin.ordenMenosRentable == "Reparación de Motos":
+            mecanicosDisminuir = admin.obtenerMecanicosAfines("Moto")
+        
+        for i in mecanicosDisminuir: 
+            mecanicosDisminuir[i].recibirComision(disminucion)
+
         self.frame2.destroy()
         self.label2.config(text=f"Le has diminuido la comision a los mecanicos en:\n{valores[0]} unidades")
     
