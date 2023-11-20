@@ -3,7 +3,7 @@ from src.gestorAplicacion.tallerMecanica.Repuestos import Repuestos
 class RepuestosDeluxe(Repuestos):
 
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
     def verificarDisponibilidad(self, tiporepuesto, repuesto):
         
