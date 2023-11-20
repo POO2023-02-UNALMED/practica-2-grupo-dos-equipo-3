@@ -1,7 +1,8 @@
 #ESTA ES LA BUENA BUENA 
 #BUENA BUENA BUENA
 import tkinter as tk
-from tkinter import ttk
+#from src.gestorAplicacion.cliente.Clientes import Clientes
+#from gestorAplicacion.cliente.Vehiculo import Vehiculo
 
 class FieldFrame(tk.Frame):
     def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
@@ -10,6 +11,8 @@ class FieldFrame(tk.Frame):
         self.ventana_usuario = ventana_usuario
         self.criterios = criterios
         self.valores = valores
+        
+        self._clienteCreado = None
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -50,8 +53,10 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 1
         elif self.ventana_usuario.idFun == 1:
-            self.ventana_usuario.funciionalidad1_1()
+            self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
         
+        elif self.ventana_usuario.idFun == 1.1:
+            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, self.valores)
         ###########todo funcionalidad 2
         
         ###########todo funcionalidad 3
@@ -169,7 +174,13 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1
 
-    def funciionalidad1_1(self):
+    def funcionalidad1_1(self, valores):
+        if not(valores[1] == "Carro" or valores[1] == "Moto"):
+            #Error debido a que no se eligio un vehiculo posible
+            pass
+        
+        #cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+        
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
@@ -182,8 +193,14 @@ class VentanaUsuario:
         self.frame2.destroy()
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
-        self.idFun = 1
+        self.idFun = 1.1
+        return None#cliente
 
+    def funcionalidad1_2(self, cliente, valores):
+        cliente.getVehiculos()[0].setTipoDeDanio(valores[0], None) #setTipoDeDanio(valores[0], admin)
+        
+        self.label2.config(text="Repuestos disponibles: \n")
+        
 
     def funcionalidad2(self):
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
