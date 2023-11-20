@@ -6,6 +6,8 @@ class Administrador:
         self._ordenes = []
         self._mecanicosDisponibles = []
         self._calificacionesTaller = []
+        self._calificacionTaller = 5
+        
         self._tiposDaño = []
         self._clientes = []
         
@@ -563,14 +565,16 @@ class Administrador:
 	
     def finanzas(self):
         for i in range(len(self._mecanicos)):
-            self.getInventario().pagar(self.getInventario().getSalarioMecanico().getValor())
+            
+            self.getInventario().pagar(self.getInventario().getSalarioMecanico())
+            
             for e in range(len(self._mecanicos[i].getOrdenes())):
                 if self._mecanicos[i].getOrdenes()[e].getTipo() == "Carro":
                     self.getInventario().recibirDinero(self._mecanicos[i].getOrdenes()[e].getPrecio())
                 elif self._mecanicos[i].getOrdenes()[e].getTipo() == "Moto":
                     self.getInventario().recibirDinero(self._mecanicos[i].getOrdenes()[e].getPrecio())
 		
-        self.getInventario().pagar(self.getInventario().getSalarioAdmin().getValor())
+        self.getInventario().pagar(self.getInventario().getSalarioAdmin())
 	
     def numOrdenes(self):
         return len(self.getOrdenes())
