@@ -193,7 +193,7 @@ class FieldFrame(tk.Frame):
                     repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
             
             for rep in repuestos:
-                respuestosD += indice + ". " + rep + "\n"
+                respuestosD += f"{indice}.{rep}\n"
                 indice += 1
             self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
             
