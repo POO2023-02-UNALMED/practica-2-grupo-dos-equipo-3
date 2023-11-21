@@ -543,6 +543,7 @@ class VentanaUsuario:
         self.idFun = 1.1
                 
         self._cliente = cliente
+        admin.añadirCliente(cliente)
         return cliente       
         
     def funcionalidad1_2(self, valores):
@@ -571,6 +572,7 @@ class VentanaUsuario:
                         self.frame2.destroy()
                         self._cliente.pagar(precio)
                         self.label2.config(text=("Precio: "+str(precio) +"\nPago Exitoso"))
+                        return
                 else:
                     self.label2.config(text="Mecanico colocado no disponible")
             else:
