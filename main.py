@@ -208,14 +208,14 @@ class VentanaUsuario:
 
         self.label1 = tk.Label(self.frame, text="¡Bienvenido a UNTAller!", font=("Arial", 16))
         self.label2 = tk.Label(self.frame, text="¿Cuál será tu petición el día de hoy?")
-        self.label1.grid(row=0, column=0, padx=20, pady=20, sticky="ns")
-        self.label2.grid(row=1, column=0, padx=20, pady=30, sticky="ns")
+        self.label1.grid(row=0, column=0, padx=20, pady=10, sticky="n")
+        self.label2.grid(row=1, column=0, padx=20, pady=10, sticky="n")
 
         self.criterios = ["", "", "", ""]
         self.valores_iniciales = ["", "", "", ""]
         self.habilitado = [False, False, False, False]  # True significa editable, False no editable
         self.frame2 = FieldFrame(self, "Criterio", self.criterios, "Valor", self.valores_iniciales, self.habilitado)
-        self.frame2.pack(padx=10, pady=10)
+        self.frame2.pack(padx=10, pady=5, expand = True)
 
         menubar1 = tk.Menu(self.frame)
         self.ventana1.config(menu=menubar1)
@@ -554,9 +554,6 @@ class VentanaUsuario:
                        f"Servicio menos rentable: {admin.ordenMasRentable()}\n "
                        f"Servicio mas rentable: {admin.ordenMenosRentable()} \n "
                        f"Calificación del taller: {admin.getCalificacionTaller()}")
-
-        
-        
         self.idFun = 4.3
         
 
