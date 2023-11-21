@@ -1,4 +1,5 @@
 import tkinter as tk
+from src.gestorAplicacion.tallerMecanica.Orden import Orden
 
 from src.uiMain.ventanaError import ventanaError
 from src.gestorAplicacion.cliente.Clientes import Clientes
@@ -227,7 +228,13 @@ class FieldFrame(tk.Frame):
                 ventanaError(v.display())
             
         elif self.ventana_usuario.idFun == 3.1:
-            self.ventana_usuario.funcionalidad3_2(self.valores)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad3_2(self.valores)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
               
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
@@ -541,6 +548,7 @@ class VentanaUsuario:
         
     def funcionalidad1_2(self, valores):
         #try:
+            print(admin.getInventario().getRepuestosDeluxe().obtenerPrecio('Motor','Bujia'))
             for i in self._repuestosD:
                 if i == valores[0]:
                     precio = 0
@@ -717,7 +725,7 @@ class VentanaUsuario:
         self.label2.config(text="Escoja respuestos: \n" + repuestosD)
         
         criterios_nuevos = ["Repuesto", "Proveedor"]
-        valores_iniciales_nuevos = ["", ""]
+        valores_iniciales_nuevos = ["(Nombre repuesto)", ""]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -729,19 +737,27 @@ class VentanaUsuario:
         
     def funcionalidad3_2(self, valores):
         self.frame2.destroy()
-        print(self._tipoRep)
+        precio = 0
+        proveedor_lista = []
         if(self._tipoRep == "Deluxe"):		
             for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(self._categoria, valores[0]))):         							
                 proveedor_lista = admin.proveedoresDisponiblesRepuestosDeluxe(self._categoria, valores[0])
-	            					
+            precio = proveedor_lista[0].getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
         elif (self._tipoRep == "Generico"):    						
             for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0]))):
                 proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0])
-
+            precio = proveedor_lista[0].getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+        
         cantidad = 1
-        print(valores[0],valores[1])
-        admin.solicitarRepuestos(categoria=self._categoria,tipo=self._tipoRep, repuesto=valores[0], cantidad=cantidad, proveedor_nombre=valores[1])
-        self.label2.config(text="Solicitud exitosa")
+        try:
+            orden_repuesto = Orden("Repuestos", precio)
+            orden_repuesto.setRepuesto(valores[0])
+            
+            admin.solicitarRepuestos(categoria=self._categoria,tipo=self._tipoRep, repuesto=valores[0], cantidad=cantidad, proveedor_nombre=valores[1])
+            admin.getInventario().pagar(precio)
+            self.label2.config(text="Solicitud exitosa")
+        except Exception as e:
+            print(e)
 	            				
     def funcionalidad4(self):
         self.label1.config(text="Generar resumen financiero", font=("Arial", 16))
