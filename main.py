@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from src.uiMain.ventanaError import ventanaError
 from src.gestorAplicacion.cliente.Clientes import Clientes
 from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
 from src.gestorAplicacion.cliente.TipoDaño import TipoDaño
@@ -567,7 +568,11 @@ class VentanaUsuario:
         self.idFun = 4
 
     def funcionalidad4_1(self):
-        self.label1.config(text=f"La orden mas rentable del taller ha sido: \n{admin.ordenMasRentable()}", font=("Arial", 16))
+        print(len(admin._ordenes))
+        if len(admin._ordenes) == 0:
+            self.label1.config(text="Aún no se ha ejecutado ninguna orden \npero le pudes dar un apoyo a tus mecanicos :)", font=("Arial", 16))
+        else:
+            self.label1.config(text=f"La orden mas rentable del taller ha sido: \n{admin.ordenMasRentable()}", font=("Arial", 16))
         print(admin.ordenMasRentable())
         self.label2.config(text="\n Ingresa el valor de comisión en bonificación \nque deseas dar a los mecanicos. \nEn caso tal de no desear tal aumento ingrese 0")
 
@@ -606,8 +611,11 @@ class VentanaUsuario:
 
 
     def funcionalidad4_2(self):
-        #Lógica para obtener el servicio con menos ingresos 
-        self.label2.config(text="El servicio con menos ingresos fue:\n ¿que deseas hacer?\n1)Aumentar precio repuestos\n2)Disminuir comisiones a los mecanicos")
+        if len(admin._ordenes) == 0:
+            self.label1.config(text="Aún no se ha ejecutado ninguna orden \npero puedes prevenir", font=("Arial", 16))
+            self.label2.config(text="¿Que deseas hacer?\n1)Aumentar precio repuestos\n2)Disminuir comisiones a los mecanicos")
+        else:
+            self.label2.config(text="El servicio con menos ingresos fue:\n ¿que deseas hacer?\n1)Aumentar precio repuestos\n2)Disminuir comisiones a los mecanicos")
 
         criterios_nuevos = ["Elección"]
         valores_iniciales_nuevos = ["1/2"]
@@ -643,11 +651,11 @@ class VentanaUsuario:
         admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Electrico")
         admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Llantas")
         admin.getInventario().getRepuestosDeluxe().aumentarPrecio(aumento, "Carroceria")
-        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Motor")
-        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Frenos")
-        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Electrico")
-        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Llantas")
-        admin.getInventario().getRepuestoGenericos().aumentarPrecio(aumento, "Carroceria")
+        admin.getInventario().getRepuestosGenericos().aumentarPrecio(aumento, "Motor")
+        admin.getInventario().getRepuestosGenericos().aumentarPrecio(aumento, "Frenos")
+        admin.getInventario().getRepuestosGenericos().aumentarPrecio(aumento, "Electrico")
+        admin.getInventario().getRepuestosGenericos().aumentarPrecio(aumento, "Llantas")
+        admin.getInventario().getRepuestosGenericos().aumentarPrecio(aumento, "Carroceria")
         
         self.label2.config(text=f"Le has subido el precio a los repuestos en:\n{valores[0]} unidades")
 
@@ -796,4 +804,6 @@ class VentanaUsuario:
 if __name__ == "__main__":
     #serializador(admin)
     VentanaUsuario()
+    ventanaError("PAPAYUELA!")
+
     
