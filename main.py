@@ -309,7 +309,7 @@ class VentanaUsuario:
         
 
         criterios_nuevos = ["Repuesto"]
-        valores_iniciales_nuevos = [""]
+        valores_iniciales_nuevos = ["1/2"]
         habilitado_nuevos = [True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
