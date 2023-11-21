@@ -104,11 +104,14 @@ class VentanaInicial:
         self.descripcionManu()
 
         # Botón "Ingresar"
-        b_ingresar = tk.Button(self.ventana1, text="Ingresar", command=self.ingresarFunc, font=16)
-        b_ingresar.place(width=600, x=25, y=670)
+        self.b_ingresar = tk.Button(self.ventana1, text="Ingresar", command=self.ingresarFunc, font=16)
+        self.b_ingresar.place(width=600, x=25, y=670)
 
         self.descripcionManu()
         self.ventana1.mainloop()
+    
+    def cambiarComandoBoton(self, comando):
+        self.b_ingresar.config(command= comando)
 
     def cargar_imagen_actual(self):
         # Cargar la imagen actual en función del índice
