@@ -16,7 +16,7 @@ class Orden:
         self._admin = admin
         self._id = Orden.asignadorId
         self._estado = False
-        self._fecha = datetime()
+        self._fecha = datetime.datetime(1999,1,1)
         self._vehiculo = vehiculo
         self._precio = precio
         Orden.asignadorId += 1
