@@ -16,6 +16,7 @@ from src.errores.errorVElejido import ErrorVehiculoElejido
 from src.errores.errorNone import ErrorNoOrdenes,ErrorClienteNone,ErrorMecanicoNone
 from src.errores.errorTipoDato import ErrorDato
 from src.uiMain.ventanaError import ventanaError
+from src.errores.errorRepElejido import ErrorRepuestoElejido
 
 
 admin = Administrador()
@@ -166,12 +167,15 @@ class FieldFrame(tk.Frame):
                 try:
                     self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
                 except ErrorVehiculoElejido as v:
-                    self.ventana_usuario.mostrarError(v.display())
+                    ventanaError(v.display())
             except ErrorCasillasVacias as f:
-                self.ventana_usuario.mostrarError(f.display())
+                ventanaError(f.display())
         
         elif self.ventana_usuario.idFun == 1.1:
-            self.ventana_usuario.funcionalidad1_2(self.valores)
+            try:
+                self.ventana_usuario.funcionalidad1_2(self.valores)
+            except ErrorRepuestoElejido as f:
+                ventanaError(f.display())
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
@@ -181,7 +185,7 @@ class FieldFrame(tk.Frame):
                         raise ErrorCasillasVacias()
                 self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
             except ErrorCasillasVacias as f:
-                self.ventana_usuario.mostrarError(f.display())
+                ventanaError(f.display())
 
         elif self.ventana_usuario.idFun == 2.1:
             self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
@@ -376,6 +380,7 @@ class VentanaUsuario:
         self._tipoRep = ""
         self._categoria = ""
         self._mecanico = ""
+        self._repuestosD = ""
         
         opciones1 = tk.Menu(menubar1, tearoff=0)
         menubar1.add_cascade(label="Archivo", menu=opciones1)
@@ -444,6 +449,7 @@ class VentanaUsuario:
         repuestos = ""
         id = 1
         lista = admin.getInventario().consultarRepuestosDisponibles(valores[1],valores[3])
+        self._repuestosD = lista
         
         for rep in lista:
             repuestos += f"{id}.{rep}"
@@ -453,7 +459,7 @@ class VentanaUsuario:
         
 
         criterios_nuevos = ["Repuesto"]
-        valores_iniciales_nuevos = ["1/2"]
+        valores_iniciales_nuevos = ["(Nombre del repuesto)"]
         habilitado_nuevos = [True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -467,27 +473,33 @@ class VentanaUsuario:
         return cliente       
         
     def funcionalidad1_2(self, valores):
-        precio = 0
-        if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+        try:
+            for i in self._repuestosD:
+                if i == valores[0]:
+                    precio = 0
+                if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
 
-        elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
-                                    
-        elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
-                                    
-        elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
+                elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+                                            
+                elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
+                                            
+                elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
 
-        print(self._cliente)
-        orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
-        orden.setRepuesto(valores[0])
-        print(orden)
-        
-        self.frame2.destroy()
-        self.label2.config(text="Precio: "+precio)
-
+                print(self._cliente)
+                orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
+                orden.setRepuesto(valores[0])
+                print(orden)
+                
+                self.frame2.destroy()
+                self.label2.config(text="Precio: "+precio)
+            else:
+                raise ErrorRepuestoElejido()
+        except:
+            raise ErrorRepuestoElejido()
         
     def funcionalidad2(self):
         "no se ingresa ningun nombre de mecanico ni ninguna orden "
