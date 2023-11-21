@@ -103,6 +103,7 @@ class FieldFrame(tk.Frame):
         self.valores = valores
                 
         self._clienteCreado = None
+        self._antiguosValores = list()
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -156,10 +157,12 @@ class FieldFrame(tk.Frame):
             self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
             
 
-        
         ###########todo funcionalidad 3
         elif self.ventana_usuario.idFun == 3:
-            self.ventana_usuario.funcionalidad3_1(self.valores[0])
+            self.ventana_usuario.funcionalidad3_1(self.valores)
+            
+        if self.ventana_usuario.idFun == 3.1:
+            self.ventana_usuario.funcionalidad3_2(self.valores)
         
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
@@ -208,14 +211,14 @@ class VentanaUsuario:
 
         self.label1 = tk.Label(self.frame, text="¡Bienvenido a UNTAller!", font=("Arial", 16))
         self.label2 = tk.Label(self.frame, text="¿Cuál será tu petición el día de hoy?")
-        self.label1.grid(row=0, column=0, padx=20, pady=20, sticky="ns")
-        self.label2.grid(row=1, column=0, padx=20, pady=30, sticky="ns")
+        self.label1.grid(row=0, column=0, padx=20, pady=10, sticky="n")
+        self.label2.grid(row=1, column=0, padx=20, pady=10, sticky="n")
 
         self.criterios = ["", "", "", ""]
         self.valores_iniciales = ["", "", "", ""]
         self.habilitado = [False, False, False, False]  # True significa editable, False no editable
         self.frame2 = FieldFrame(self, "Criterio", self.criterios, "Valor", self.valores_iniciales, self.habilitado)
-        self.frame2.pack(padx=10, pady=10)
+        self.frame2.pack(padx=10, pady=5, expand = True)
 
         menubar1 = tk.Menu(self.frame)
         self.ventana1.config(menu=menubar1)
@@ -371,8 +374,8 @@ class VentanaUsuario:
         self.label2.config(text="Dime, ¿que deseas pedir?")
 
         criterios_nuevos = ["Categoria", "Tipo de daño"]
-        valores_iniciales_nuevos = ["Deluxe/Generico", "Producto"]
-        habilitado_nuevos = [True, True]
+        valores_iniciales_nuevos = ["Deluxe/Generico", "Producto", ]
+        habilitado_nuevos = [True, True,]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -381,17 +384,25 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 3
         
-    def funcionalidad3_1(self, categoriaDada):
+    def funcionalidad3_1(self, valores):
+        repuestos = []
         self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
+        categoria = valores[0]
+        tipoRepuesto = valores[1]
         
         respuestosD = ""
         indice = 1
-        if categoriaDada == "Deluxe":
-            #llenar respuestosD con admin
-            pass
-        elif categoriaDada == "Generico":
-            #llenar respuestosD con admin
-            pass
+        if valores[0] == "Deluxe":
+            for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(tipoRepuesto))):
+                repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(tipoRepuesto)
+            
+        elif valores[0] == "Generico":
+            for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(tipoRepuesto))):
+                repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(tipoRepuesto)
+                
+        for rep in repuestos:
+            respuestosD += indice + ". " + rep + "\n"
+            indice += 1
         
         self.label2.config(text="Escoja respuestos: " + respuestosD)
         
@@ -404,8 +415,24 @@ class VentanaUsuario:
         self.frame2.destroy()
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
-            
+        self.idFun = 3.1
         
+    def funcionalidad3_2(self, valores):
+        pass
+        #if(antiguosValores[0] == "Deluxe"):		
+        #    for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0]))):         							
+        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0])
+	    #        					
+        #elif (antiguosValores[0] == "Generico"):    						
+        #    for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0]))):
+        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0])
+    
+        #try:
+        #    admin.solicitarRepuestos(antiguosValores[0], antiguosValores[1], valores[0], 1, valores[1])
+        #except:
+        #    self.label2.config(text="Error")
+
+	            				
     def funcionalidad4(self):
         self.label1.config(text="Generar resumen financiero", font=("Arial", 16))
         self.label2.config(text="¿Que resumen deseas hacer?\n1)Servicio que genera mas ingresos\n2)Servicio que genera menos ingresos \n3)Total")
@@ -554,9 +581,6 @@ class VentanaUsuario:
                        f"Servicio menos rentable: {admin.ordenMasRentable()}\n "
                        f"Servicio mas rentable: {admin.ordenMenosRentable()} \n "
                        f"Calificación del taller: {admin.getCalificacionTaller()}")
-
-        
-        
         self.idFun = 4.3
         
 
