@@ -552,16 +552,16 @@ class VentanaUsuario:
                 if i == valores[0]:
                     precio = 0
                 if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
 
                 elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
                                             
                 elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
                                             
                 elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
 
                 for mec in admin.getMecanicos():
                     if mec.getNombre() == self._mecanico:
