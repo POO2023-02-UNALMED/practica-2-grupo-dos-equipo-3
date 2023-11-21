@@ -152,24 +152,8 @@ class FieldFrame(tk.Frame):
             self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
         
         elif self.ventana_usuario.idFun == 1.1:
-            precio = 0
-            if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
-
-            elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
-                                    
-            elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
-                                    
-            elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
-
-            print(precio)
-            orden = self._clienteCreado.crearOrden(self._clienteCreado.getVehiculos()[0], self._mecanico, admin, precio)
-            orden.setRepuesto(self.valores[0])
-            print(orden)
-            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, precio)
+            
+            self.ventana_usuario.funcionalidad1_2(self.valores)
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
@@ -272,6 +256,7 @@ class VentanaUsuario:
         self.ventana1.config(menu=menubar1)
 
         self.idFun = 0
+        self._cliente = None
         self._vehiculo = ""
         self._tipoRep = ""
         self._categoria = ""
@@ -358,9 +343,29 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1.1
+        
+        self._cliente = cliente
         return cliente
 
-    def funcionalidad1_2(self, cliente, precio):
+    def funcionalidad1_2(self, valores):
+        precio = 0
+        if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+        elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+        elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+        elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+        print(precio)
+        orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
+        orden.setRepuesto(valores[0])
+        print(orden)
+        
         self.frame2.destroy()
         self.label2.config(text="Precio: "+precio)
 
