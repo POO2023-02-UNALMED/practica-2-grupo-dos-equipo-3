@@ -507,12 +507,16 @@ class Administrador:
         proveedoresDisponibles = []
         if (tipo == "Motor"):
             for i in range(len(self._proveedores)): 
+
                 if (self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,"Bujia") and self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,"Filtro de aceite")):
+
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Frenos"):
             for i in range(len(self._proveedores)):
+
                 if (self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,"Pastilla de frenos") and self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,"Liquido de frenos")):
+
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Electrico"):
@@ -551,11 +555,8 @@ class Administrador:
 		
         elif (tipo == "Llantas"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,clave)):
-                    proveedoresDisponibles.append(self._proveedores[i])
-		
-        elif (tipo == "Carroceria"):
-            for i in range(len(self._proveedores)):
+
+               
                 if (self._proveedores[i].getRepuestoGenerico().verificarDisponibilidad(tipo,clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		

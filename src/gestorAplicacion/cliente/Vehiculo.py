@@ -58,9 +58,6 @@ class Vehiculo:
         numeroAleatorio = random.choice(5)
         self._tipoDeDanio = admin.getTiposDaño()[numeroAleatorio]
     
-    #Sobrecarga de metodos- aplicar
-    def setTipoDeDanio(self, tipoDeDanio):
-        self._tipoDeDanio = tipoDeDanio
 
     def __str__(self):
     	return self.getTipo()

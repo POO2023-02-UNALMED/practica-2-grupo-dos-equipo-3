@@ -173,13 +173,11 @@ class FieldFrame(tk.Frame):
             for rep in repuestos:
                 respuestosD += indice + ". " + rep + "\n"
                 indice += 1
-            
             self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
             
-        if self.ventana_usuario.idFun == 3.1:
+        elif self.ventana_usuario.idFun == 3.1:
             self.ventana_usuario.funcionalidad3_2(self.valores)
-            
-        
+              
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
             self.ventana_usuario.funcionalidad4_1()
@@ -294,9 +292,9 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
-        criterios_nuevos = ["Nombre", "Vehiculo"]
-        valores_iniciales_nuevos = ["Generico/Deluxe",""]
-        habilitado_nuevos = [True, True]
+        criterios_nuevos = ["Nombre", "Vehiculo", "TipoDaño", "Mecanico"]
+        valores_iniciales_nuevos = ["Generico/Deluxe","","Motor/Frenos/...",""]
+        habilitado_nuevos = [True, True, True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -310,14 +308,21 @@ class VentanaUsuario:
             #Error debido a que no se eligio un vehiculo posible
             pass
         
-        #cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+        cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+        cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
+        repuestos = ""
+        id = 1
+        lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+        for rep in lista:
+            repuestos += id + ". " + rep
+            id += 1
         
-        self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
-        self.label2.config(text="Ingresa, que deseas hacer hoy")
+        self.label2.config(text="Repuestos disponibles: " + repuestos)
+        
 
-        criterios_nuevos = ["Tipo de daño","Nombre mecanico"]
-        valores_iniciales_nuevos = ["Motor/Frenos",""]
-        habilitado_nuevos = [True, True]
+        criterios_nuevos = ["Repuesto"]
+        valores_iniciales_nuevos = ["1/2"]
+        habilitado_nuevos = [True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -325,10 +330,10 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1.1
-        return None#cliente
+        return cliente
 
     def funcionalidad1_2(self, cliente, valores):
-        cliente.getVehiculos()[0].setTipoDeDanio(valores[0], None) #setTipoDeDanio(valores[0], admin)
+         #setTipoDeDanio(valores[0], admin)
         
         self.label2.config(text="Repuestos disponibles: \n")
 
@@ -434,6 +439,7 @@ class VentanaUsuario:
         self.idFun = 3.1
         
     def funcionalidad3_2(self, valores):
+        self.frame2.destroy()
         print(self._tipoRep)
         if(self._tipoRep == "Deluxe"):		
             for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(self._categoria, valores[0]))):         							
@@ -442,12 +448,11 @@ class VentanaUsuario:
         elif (self._tipoRep == "Generico"):    						
             for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0]))):
                 proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0])
-    
-        try:
-            admin.solicitarRepuestos(self._tipoRep, self._categoria, valores[0], 1, valores[1])
-        except:
-            self.label2.config(text="Error")
 
+        cantidad = 1
+        print(valores[0],valores[1])
+        admin.solicitarRepuestos(categoria=self._categoria,tipo=self._tipoRep, repuesto=valores[0], cantidad=cantidad, proveedor_nombre=valores[1])
+        self.label2.config(text="Solicitud exitosa")
 	            				
     def funcionalidad4(self):
         self.label1.config(text="Generar resumen financiero", font=("Arial", 16))

@@ -11,7 +11,7 @@ class CalificacionMecanico(ABC):
         pass
     
     @abstractclassmethod
-    def calificarMecanico(self, mecanico, calificacion):
+    def calificar_mecanico(self, mecanico, calificacion):
         pass
     
     @abstractclassmethod
