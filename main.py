@@ -473,7 +473,7 @@ class VentanaUsuario:
         return cliente       
         
     def funcionalidad1_2(self, valores):
-        try:
+        #try:
             for i in self._repuestosD:
                 if i == valores[0]:
                     precio = 0
@@ -496,10 +496,10 @@ class VentanaUsuario:
                 
                 self.frame2.destroy()
                 self.label2.config(text="Precio: "+precio)
-            else:
-                raise ErrorRepuestoElejido()
-        except:
-            raise ErrorRepuestoElejido()
+            #else:
+                #raise ErrorRepuestoElejido()
+        #except:
+            #raise ErrorRepuestoElejido()
         
     def funcionalidad2(self):
         "no se ingresa ningun nombre de mecanico ni ninguna orden "
