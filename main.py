@@ -568,11 +568,11 @@ class VentanaUsuario:
                 for mec in admin.getMecanicos():
                     if mec.getNombre() == self._mecanico:
                         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], mec, admin, precio)
-                    orden.setRepuesto(valores[0])
-                    print(orden)
+                        orden.setRepuesto(valores[0])
+                        print(orden)
                     
-                    self.frame2.destroy()
-                    self.label2.config(text="Precio: "+precio)
+                        self.frame2.destroy()
+                        self.label2.config(text="Precio: "+precio)
                 else:
                     self.label2.config(text="Mecanico colocado no disponible")
             #else:
