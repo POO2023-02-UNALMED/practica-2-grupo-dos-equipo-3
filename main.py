@@ -1,6 +1,6 @@
 import tkinter as tk
 from src.gestorAplicacion.tallerMecanica.Orden import Orden
-from src.uiMain.ventanaPrincipal import VentanaInicial
+
 from src.uiMain.ventanaError import ventanaError
 from src.gestorAplicacion.cliente.Clientes import Clientes
 from src.gestorAplicacion.cliente.Vehiculo import Vehiculo
@@ -425,8 +425,8 @@ class FieldFrame(tk.Frame):
                 entry.delete(0, "end")
 
 class VentanaUsuario:
-    def __init__(self):
-        self.ventana1 = tk.Tk()
+    def __init__(self, ventana):
+        self.ventana1 = ventana
         self.ventana1.title("UNTaller")
         self.ventana1.geometry("500x390")
 
@@ -1010,9 +1010,7 @@ class VentanaUsuario:
         self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
 
 ###NO SE QUE ESTOY HACIENDO XD
-
-if __name__ == "__main__":
-    import builtins
+import builtins
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
@@ -1207,15 +1205,13 @@ class VentanaInicial:
     def ingresarFunc(self):
         self.ventana1.withdraw() # Minimiza la ventana inicial
         ventana_principal = tk.Tk()
-        MiAplicacion(ventana_principal)
+        VentanaUsuario(ventana_principal)
         ventana_principal.mainloop()
 
-    
+
 
 if __name__ == "__main__":
     VentanaInicial()
-    VentanaInicial.cambiarComandoBoton(VentanaUsuario)
-    
     
     #serializador(admin)
    

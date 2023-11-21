@@ -42,11 +42,11 @@ class MiAplicacion:
         print("Consulta realizada")
 
 class VentanaInicial:
-    def __init__(self):
+    def __init__(self, ventanaPrincipal):
         self.ventana1 = tk.Tk()
         self.ventana1.title("Mi Aplicación")
         self.ventana1.geometry("1350x720+60+5")
-
+        self.ventanaPrincipal = ventanaPrincipal
         # Frame superior
         frame_superior = tk.Frame(self.ventana1)
         frame_superior.pack(fill=tk.X)
@@ -193,7 +193,7 @@ class VentanaInicial:
     def ingresarFunc(self):
         self.ventana1.withdraw() # Minimiza la ventana inicial
         ventana_principal = tk.Tk()
-        MiAplicacion(ventana_principal)
+        self.ventanaPrincipal(ventana_principal)
         ventana_principal.mainloop()
 
     
