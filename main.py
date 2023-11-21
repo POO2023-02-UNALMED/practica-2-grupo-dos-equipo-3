@@ -11,6 +11,7 @@ from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import RepuestosDeluxe
 from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
 from src.errores.errorCasillasVacias import ErrorCasillasVacias
+from src.errores.errorVElejido import ErrorVehiculoElejido
 
 
 admin = Administrador()
@@ -157,7 +158,10 @@ class FieldFrame(tk.Frame):
                 self._vehiculo = self.valores[1]
                 self._categoria = self.valores[0]
                 self._mecanico == self.valores[3]
-                self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                try:
+                    self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                except ErrorVehiculoElejido as v:
+                    self.ventana_usuario.mostrarError(v.display())
             except ErrorCasillasVacias as f:
                 self.ventana_usuario.mostrarError(f.display())
         
@@ -392,23 +396,23 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1.1
-        
+                
         self._cliente = cliente
-        return cliente
-
+        return cliente       
+        
     def funcionalidad1_2(self, valores):
         precio = 0
         if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
 
         elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
                                     
         elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
                                     
         elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
 
         print(precio)
         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
