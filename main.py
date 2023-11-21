@@ -161,7 +161,12 @@ class FieldFrame(tk.Frame):
 
         elif self.ventana_usuario.idFun == 2.1:
             self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
-            
+
+        elif self.ventana_usuario.idFun == 2.3:
+            self.ventana_usuario.funcionalidad2_3(self.valores[0], self.valores[1])
+
+        elif self.ventana_usuario.idFun == 2.4:
+            self.ventana_usuario.funcionalidad2_4Final()     
 
         ###########todo funcionalidad 3
         elif self.ventana_usuario.idFun == 3:
@@ -371,12 +376,32 @@ class VentanaUsuario:
 
         
     def funcionalidad2(self):
+        "no se ingresa ningun nombre de mecanico ni ninguna orden "
+        mecanicos_text = ""
+        ordenes_text = ""
+        mecanico = None
+
+        nombre_mecanico = ""  
+
+        for i in range(len(admin.mecanicosTrabajando())):
+            mecanicos_text += f"{i}.{admin.mecanicosTrabajando()[i].getNombre()}\n"
+
+        self.label2.config(text=mecanicos_text + "Hola mecanico ¿Cuál es tu nombre?")
+
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
-        self.label2.config(text="Mecanico, identificate y escribe el numero de orden que quieres realizar")
 
         criterios_nuevos = ["Nombre", "Numero Orden"]
         valores_iniciales_nuevos = ["", ""]
         habilitado_nuevos = [True, True]
+
+        for m in admin.mecanicosTrabajando():
+            if m.getNombre() == nombre_mecanico:
+                mecanico = m
+                break
+
+        if mecanico is not None:
+            for i in range(len(mecanico.getOrdenes())):
+                ordenes_text += f"{i}.Orden{i}"
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -386,8 +411,9 @@ class VentanaUsuario:
 
         self.idFun = 2
 
+
     def funcionalidad2_1(self, nombreMecanico, numeroOrden):
-        """falta describir la orden"""
+        """falta insertar bien la orden para saber que combinacion es la correcta"""
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
         self.label2.config(text=nombreMecanico +", de acuerdo a la descripcion de la orden ingresa los pasos correctos\n"+numeroOrden)
 
@@ -403,20 +429,22 @@ class VentanaUsuario:
         self.idFun = 2.1
         
     def funcionalidad2_2(self, val1, val2, val3, val4, val5):
-        # Cambiar el orden para configurar las etiquetas después de destruir y recrear el frame
+        "no falta nada "
         print("valor 1 "+ val1 + " |valor2 "+ val2 +" |valor3 "+ val3 +" |valor4 "+ val4 + " |valor5 "+val5 )
         self.label1.config(text="Realizar servicio", font=("Arial", 16))
         correcto = "12345"
         if val1 + val2 + val3 + val4 + val5 == correcto:
             self.label2.config(text="usted ha ganado -5000-\n ha reparado el vehiculo ¿le gustaria hacer algo más?")
             criterios_nuevos = ["1.Consultar ordenes realizadas", "2.Consultar comisiones"]
-            valores_iniciales_nuevos = ["si/no", "si/no"]
+            valores_iniciales_nuevos = ["", ""]
             habilitado_nuevos = [True, True]
             nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
             self.frame2.destroy()
             self.frame2 = nuevo_frame2
             self.frame2.pack(padx=10, pady=10)
+            #self.funcionalidad2_3(self.valores_iniciales[0], valores_iniciales_nuevos[1])
+            self.idFun = 2.3
         else:
             self.label2.config(text="se ha equivocado en el orden de los pasos y ha generado un error de tipo -carroceria-\nintentelo de nuevo")
             self.funcionalidad2_21()
@@ -434,6 +462,42 @@ class VentanaUsuario:
         self.frame2.destroy()
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
+    
+    def funcionalidad2_3(self, ordenes, comisiones):
+        """En esta funcionalidad falla el uso de los if, falta modificar"""
+       
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
+    
+        if ordenes == "'si'" and comisiones == "'no'":
+            self.label2.config(text="aqui deben ir los id de las ordenes realizadas")
+        else:
+            self.label2.config(text="Hasta luego" + " ordenes: "+ordenes + " |comisiones: "+ comisiones) 
+            self.idFun= 2.4
+
+        if ordenes == "'no'" and comisiones == "'si'":
+            self.label2.config(text="aqui debe ir la comision" +" ordenes: "+ordenes + " |comisiones: "+ comisiones)
+        else:
+            self.label2.config(text="Hasta luego" + ordenes + comisiones)
+            self.idFun= 2.4
+
+        if ordenes == "'si'" and comisiones == "'si'":
+            self.label2.config(text="aqui deben ir los id de las ordenes realizadas y la comision")
+        else:
+            self.label2.config(text="Hasta luego" + "ordenes: "+ordenes + " |comisiones**: "+ comisiones)
+            self.idFun=2.4
+
+    def funcionalidad2_4Final(self):
+        #criterios_nuevos = None
+        #valores_iniciales_nuevos = None
+        #habilitado_nuevos = None
+        #nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+        #self.frame2.destroy()
+        #self.frame2 = nuevo_frame2
+        #self.frame2.pack(padx=10, pady=10)
+        
+        self.label1.config(text="Realizar servicio", font=("Arial", 16))
+    
+        self.label2.config(text="Hasta luego")
         
 
     def funcionalidad3(self):
