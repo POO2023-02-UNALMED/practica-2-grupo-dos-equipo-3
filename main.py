@@ -109,6 +109,7 @@ class FieldFrame(tk.Frame):
         self.valores = valores
                 
         self._clienteCreado = None
+        self._repuesto =""
         self._vehiculo = ""
         self._categoria = ""
         self._mecanico = ""
@@ -159,9 +160,9 @@ class FieldFrame(tk.Frame):
                     if i == "":
                         raise ErrorCasillasVacias()
                 
-                self._vehiculo = self.valores[1]
-                self._categoria = self.valores[0]
-                self._mecanico == self.valores[3]
+                self._vehiculo = self.valores[2]
+                self._categoria = self.valores[1]
+                self._mecanico == self.valores[4]
                 try:
                     self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
                 except ErrorVehiculoElejido as v:
@@ -418,9 +419,9 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
-        criterios_nuevos = ["Nombre", "Vehiculo", "TipoDaño", "Mecanico"]
-        valores_iniciales_nuevos = ["Generico/Deluxe","","Motor/Frenos/...",""]
-        habilitado_nuevos = [True, True, True, True]
+        criterios_nuevos = ["Nombre cliente","Categoria", "Vehiculo", "TipoDaño", "Mecanico"]
+        valores_iniciales_nuevos = ["","Generico/Deluxe","","Motor/Frenos/...",""]
+        habilitado_nuevos = [True,True, True, True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -430,19 +431,19 @@ class VentanaUsuario:
         self.idFun = 1
 
     def funcionalidad1_1(self, valores):
-        if not(valores[1] == "Carro" or valores[1] == "Moto"):
+        if not(valores[2] == "Carro" or valores[2] == "Moto"):
             #Error debido a que no se eligio un vehiculo posible
             return
-        self._categoria = valores[0]
-        self._vehiculo = valores[1]
-        self._tipoRep = valores[2]
-        self._mecanico = valores[3]
+        self._categoria = valores[1]
+        self._vehiculo = valores[2]
+        self._tipoRep = valores[3]
+        self._mecanico = valores[4]
         
-        cliente = Clientes(valores[0], Vehiculo(valores[1], None))
-        cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
+        cliente = Clientes(valores[0], Vehiculo(valores[2], None))
+        cliente.getVehiculos()[0].setTipoDeDanio(valores[3], admin)
         repuestos = ""
         id = 1
-        lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+        lista = admin.getInventario().consultarRepuestosDisponibles(valores[1],valores[3])
         
         for rep in lista:
             repuestos += f"{id}.{rep}"
@@ -479,7 +480,7 @@ class VentanaUsuario:
         elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
             precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
 
-        print(precio)
+        print(self._cliente)
         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
         orden.setRepuesto(valores[0])
         print(orden)
