@@ -233,9 +233,34 @@ class FieldFrame(tk.Frame):
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
             self.ventana_usuario.funcionalidad4_1()
 
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == '':      
+            try: 
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == '':
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        
         elif self.ventana_usuario.idFun == 4.1:
-            self.ventana_usuario.funcionalidad4_1Final(self.valores)
-                
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_1Final(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+            
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "2" :
             self.ventana_usuario.funcionalidad4_2()
 
