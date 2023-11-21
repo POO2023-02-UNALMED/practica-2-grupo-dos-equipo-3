@@ -272,16 +272,46 @@ class FieldFrame(tk.Frame):
             self.ventana_usuario.funcionalidad4_2()
 
         elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "1": 
-            self.ventana_usuario.funcionalidad4_2Repuestos()
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2Repuestos()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
 
         elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
             self.ventana_usuario.funcionalidad4_2Mecanicos()
 
         elif self.ventana_usuario.idFun == 4.21: 
-            self.ventana_usuario.funcionalidad4_2RepuestosFinal(self.valores)
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2RepuestosFinal(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
         
         elif self.ventana_usuario.idFun == 4.22: 
-            self.ventana_usuario.funcionalidad4_2MecanicosFinal(self.valores)
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2MecanicosFinal(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
         
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "3":
             self.ventana_usuario.funcionalidad4_3()
