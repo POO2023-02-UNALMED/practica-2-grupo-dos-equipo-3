@@ -374,8 +374,9 @@ class VentanaUsuario:
         repuestos = ""
         id = 1
         lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+        
         for rep in lista:
-            repuestos += id + ". " + rep
+            repuestos += f"{id}.{rep}"
             id += 1
         
         self.label2.config(text="Repuestos disponibles: " + repuestos)
