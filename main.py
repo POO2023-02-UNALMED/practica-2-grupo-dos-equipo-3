@@ -460,7 +460,7 @@ class VentanaUsuario:
 
     def funcionalidad4_1(self):
         self.label1.config(text=f"La orden mas rentable del taller ha sido: \n{admin.ordenMasRentable()}", font=("Arial", 16))
-        
+        print(admin.ordenMasRentable())
         self.label2.config(text="\n Ingresa el valor de comisión en bonificación \nque deseas dar a los mecanicos. \nEn caso tal de no desear tal aumento ingrese 0")
 
         criterios_nuevos = ["Bonificación"]
