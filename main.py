@@ -12,6 +12,8 @@ from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
 from src.errores.errorCasillasVacias import ErrorCasillasVacias
 from src.errores.errorVElejido import ErrorVehiculoElejido
+from src.errores.errorNone import ErrorNoOrdenes,ErrorClienteNone,ErrorMecanicoNone
+from src.errores.errorTipoDato import ErrorDato
 
 
 admin = Administrador()
@@ -235,40 +237,106 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 5
         elif self.ventana_usuario.idFun == 5:
-            if admin.getClienteNombre(self.valores[0]) is not None and admin.asignarMecanico(self.valores[1] is not None):
+            try:
+                for valor in self.valores:
+                    if valor == '':
+                        raise ErrorCasillasVacias()
                 self._clienteCalificando = admin.getClienteNombre(self.valores[0])
                 self._mecanicoCalificado = admin.asignarMecanico(self.valores[1])
+                if self._clienteCalificando == None:
+                    raise ErrorClienteNone()
+                if self._mecanicoCalificado == None:
+                    raise ErrorMecanicoNone()
                 self.ventana_usuario.funcionalidad5_1()
-            else:
+            except ErrorClienteNone as e:
+                #ventana
                 pass
+            except ErrorMecanicoNone as b:
+                #ventana
+                pass
+            except ErrorCasillasVacias as c:
+                #ventana
+                pass
+                
         elif self.ventana_usuario.idFun == 5.1:
-            self._clienteCalificando.calificarTaller(admin, self.valores[0])
-            self.ventana_usuario.funcionalidad5_2()
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                calificacion = int(self.valores[0])
+                self._clienteCalificando.calificarTaller(admin, calificacion)
+                self.ventana_usuario.funcionalidad5_2()
+            except ErrorCasillasVacias as a:
+                #ventana
+                pass
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                #ventana
+                pass
         elif self.ventana_usuario.idFun == 5.2:
-            if self.valores[0] > 3:
-                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
-                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
-                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
-                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
-                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
+            try:
+                if self.valores[0] == "":
+                    raise ErrorCasillasVacias()
+                calificacion = int(self.valores[0])
 
-                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
-                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
-                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
-                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
-                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
+                if calificacion < 0:
+                    raise ErrorDato()
+                if self.valores[0] > 3
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
 
-            self.ventana_usuario.funcionalidad5_3()
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
+                    self.ventana_usuario.funcionalidad5_3()
+            
+            except ErrorCasillasVacias as a:
+                pass
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                pass
+
+
+            
         elif self.ventana_usuario.idFun == 5.3:
-            if self.valores[0] > 3:
+            try:
+              if self.valores[0] == "":
+                  raise ErrorCasillasVacias()
+              
+              calificacion = int(self.valores[0])
+              if self.valores[0] > 3:
                 self._mecanicoCalificado.recibirComision(1000)
+              self.ventana_usuario.funcionalidad5_4()
+            except ErrorCasillasVacias as a:
+                pass
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                pass
 
-            self.ventana_usuario.funcionalidad5_4()
+            
         elif self.ventana_usuario.idFun == 5.4:
-            if self.valores[0] > 0:
-                self._mecanicoCalificado.recibirComision(self.valores[0])
-                self._clienteCalificando.pagar(self.valores[0])
-            self.ventana_usuario.funcionalidad5_5()
+            try:
+                if self.valores[0] == "":
+                    raise ErrorCasillasVacias()
+                comision = int(self.valores[0])
+           
+                self._mecanicoCalificado.recibirComision(comision)
+                self._clienteCalificando.pagar(comision)
+                self.ventana_usuario.funcionalidad5_5()
+            
+            except ErrorCasillasVacias as a:
+                pass
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                pass
         
         
         
