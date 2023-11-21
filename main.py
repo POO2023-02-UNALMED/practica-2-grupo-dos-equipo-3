@@ -15,6 +15,7 @@ from src.errores.errorCasillasVacias import ErrorCasillasVacias
 from src.errores.errorVElejido import ErrorVehiculoElejido
 from src.errores.errorNone import ErrorNoOrdenes,ErrorClienteNone,ErrorMecanicoNone
 from src.errores.errorTipoDato import ErrorDato
+from src.uiMain.ventanaError import ventanaError
 
 
 admin = Administrador()
@@ -250,15 +251,11 @@ class FieldFrame(tk.Frame):
                     raise ErrorMecanicoNone()
                 self.ventana_usuario.funcionalidad5_1()
             except ErrorClienteNone as e:
-                #ventana
-                pass
+                ventanaError(e.display())
             except ErrorMecanicoNone as b:
-                #ventana
-                pass
+                ventanaError(b.display())
             except ErrorCasillasVacias as c:
-                #ventana
-                pass
-                
+                ventanaError(c.display())
         elif self.ventana_usuario.idFun == 5.1:
             try:
                 if self.valores[0] == '':
@@ -267,13 +264,11 @@ class FieldFrame(tk.Frame):
                 self._clienteCalificando.calificarTaller(admin, calificacion)
                 self.ventana_usuario.funcionalidad5_2()
             except ErrorCasillasVacias as a:
-                #ventana
-                pass
+                ventanaError(a.display())
             except ValueError as b:
                 raise ErrorDato()
             except ErrorDato as c:
-                #ventana
-                pass
+                ventanaError(c.display())
         elif self.ventana_usuario.idFun == 5.2:
             try:
                 if self.valores[0] == "":
@@ -297,11 +292,12 @@ class FieldFrame(tk.Frame):
                 self.ventana_usuario.funcionalidad5_3()
             
             except ErrorCasillasVacias as a:
-                pass
+                ventanaError(a.display())
             except ValueError as b:
                 raise ErrorDato()
             except ErrorDato as c:
-                pass
+                ventanaError(c.display())
+
 
 
             
@@ -315,11 +311,11 @@ class FieldFrame(tk.Frame):
                 self._mecanicoCalificado.recibirComision(1000)
               self.ventana_usuario.funcionalidad5_4()
             except ErrorCasillasVacias as a:
-                pass
+                ventanaError(a.display())
             except ValueError as b:
                 raise ErrorDato()
             except ErrorDato as c:
-                pass
+                ventanaError(c.display())
 
             
         elif self.ventana_usuario.idFun == 5.4:
@@ -333,11 +329,11 @@ class FieldFrame(tk.Frame):
                 self.ventana_usuario.funcionalidad5_5()
             
             except ErrorCasillasVacias as a:
-                pass
+                ventanaError(a.display())
             except ValueError as b:
                 raise ErrorDato()
             except ErrorDato as c:
-                pass
+                ventanaError(c.display())
         
         
         
@@ -920,6 +916,6 @@ class VentanaUsuario:
 if __name__ == "__main__":
     #serializador(admin)
     VentanaUsuario()
-    ventanaError("PAPAYUELA!")
+    
 
     

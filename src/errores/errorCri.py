@@ -1,5 +1,5 @@
 from tkinter import *
-from errorApli import ErrorAplicacion
+from src.errores.errorApli import ErrorAplicacion
 
 class ErrorCritico(ErrorAplicacion):
     def __init__(self, err=""):
