@@ -10,6 +10,7 @@ from src.gestorAplicacion.tallerMecanica.RepuestosGenericos import RepuestosGene
 from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import RepuestosDeluxe
 from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
+from src.errores.errorCasillasVacias import ErrorCasillasVacias
 
 
 admin = Administrador()
@@ -146,13 +147,19 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 1
         elif self.ventana_usuario.idFun == 1:
-            self._vehiculo = self.valores[1]
-            self._categoria = self.valores[0]
-            self._mecanico == self.valores[3]
-            self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                
+                self._vehiculo = self.valores[1]
+                self._categoria = self.valores[0]
+                self._mecanico == self.valores[3]
+                self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+            except ErrorCasillasVacias as f:
+                self.ventana_usuario.mostrarError(f.display())
         
         elif self.ventana_usuario.idFun == 1.1:
-            
             self.ventana_usuario.funcionalidad1_2(self.valores)
         
         ###########todo funcionalidad 2
@@ -302,6 +309,9 @@ class VentanaUsuario:
         etiqueta = tk.Label(ventanaSalida, text=textoSalida, borderwidth=2, relief="solid", wraplength=770, font=16)
         etiqueta.grid(row=0, column=0, padx=10, pady=10)
 
+    def mostrarError(self, texto):
+        self.label2.config(text=texto)
+    
     def funcionalidad1(self):
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
@@ -521,7 +531,7 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
         
         
-        self.label2.config(text="Escoja respuestos: " + repuestosD)
+        self.label2.config(text="Escoja respuestos: \n" + repuestosD)
         
         criterios_nuevos = ["Repuesto", "Proveedor"]
         valores_iniciales_nuevos = ["", ""]
