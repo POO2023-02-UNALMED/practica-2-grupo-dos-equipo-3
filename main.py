@@ -282,7 +282,7 @@ class FieldFrame(tk.Frame):
 
                 if calificacion < 0:
                     raise ErrorDato()
-                if self.valores[0] > 3
+                if calificacion > 3:
                     admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
                     admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
                     admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
@@ -294,7 +294,7 @@ class FieldFrame(tk.Frame):
                     admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
                     admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
                     admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
-                    self.ventana_usuario.funcionalidad5_3()
+                self.ventana_usuario.funcionalidad5_3()
             
             except ErrorCasillasVacias as a:
                 pass
