@@ -29,8 +29,9 @@ class Inventario():
     def setRepuestosDeluxe(self, repuestos):
         self._repuestosDeluxe = repuestos
 
-    def getRepuestoGenericos(self):
+    def getRepuestosGenericos(self):
         return self._repuestosGenericos
+    
     def setRepuestosGenericos(self, repuestos):
         self._repuestosGenericos = repuestos
 
