@@ -544,6 +544,7 @@ class VentanaUsuario:
         self.idFun = 1.1
                 
         self._cliente = cliente
+        admin.añadirCliente(cliente)
         return cliente       
         
     def funcionalidad1_2(self, valores):
@@ -565,7 +566,6 @@ class VentanaUsuario:
                     precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
 
                 for mec in admin.getMecanicos():
-                    print(mec.getNombre(), self._mecanico)
                     if mec.getNombre() == self._mecanico:
                         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], mec, admin, precio)
                         orden.setRepuesto(valores[0])
