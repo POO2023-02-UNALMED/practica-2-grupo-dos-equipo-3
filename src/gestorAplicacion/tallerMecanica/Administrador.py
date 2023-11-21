@@ -281,189 +281,32 @@ class Administrador:
                 valor2 = proveedor.getRepuestosGenericos().getRepuestosCarroceria()[repuesto]
                 valor2 -= cantidad
                 proveedor.getRepuestosGenericos().repuestosCarroceria[repuesto] = valor2
-	
-    def solicitarRepuestos(self, categoria, tipo, repuesto,repuesto2, cantidad, proveedor_nombre):
-        proveedor = None
-        for i in range(len(self.getProveedores())):
-            if proveedor_nombre == self.getProveedores()[i].getNombre():
-                proveedor = self.getProveedores()[i]
-
-        if categoria == "Deluxe":
-            if tipo == "Motor":
-                valor1 = self.getInventario().getRepuestosDeluxe().getRepuestosMotor()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosMotor[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosDeluxe().getRepuestosMotor()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosMotor[repuesto2] = valor2
                 
-                valor3 = proveedor.getRepuestosDeluxe().getRepuestosMotor()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosMotor[repuesto] = valor3
-                valor4 = proveedor.getRepuestosDeluxe().getRepuestosMotor()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosMotor[repuesto2] = valor4
-			
-            elif tipo == "Frenos":
-                valor1 = self.getInventario().getRepuestosDeluxe().getRepuestosFrenos()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosFrenos[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosDeluxe().getRepuestosFrenos()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosFrenos[repuesto2] = valor2
-				
-                valor3 = proveedor.getRepuestosDeluxe().getRepuestosFrenos()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosFrenos[repuesto] = valor3
-                valor4 = proveedor.getRepuestosDeluxe().getRepuestosFrenos()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosFrenos[repuesto2] = valor4
-    
-            elif tipo == "Electrico":
-                valor1 = self.getInventario().getRepuestosDeluxe().getRepuestosElectrico()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosElectrico[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosDeluxe().getRepuestosElectrico()[repuesto2]
-                
-                valor2 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosElectrico[repuesto2] = valor2
-			
-                valor3 = proveedor.getRepuestosDeluxe().getRepuestosElectrico()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosElectrico[repuesto] = valor3
-                valor4 = proveedor.getRepuestosDeluxe().getRepuestosElectrico()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosElectrico[repuesto2] = valor4
-				
-            elif tipo == "Llantas":
-                valor1 = self.getInventario().getRepuestosDeluxe().getRepuestosLlantas()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosLlantas[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosDeluxe().getRepuestosLlantas()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosLlantas[repuesto] = valor2
-				
-                valor3 = proveedor.getRepuestosDeluxe().getRepuestosLlantas()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosLlantas[repuesto] = valor3
-                valor4 = proveedor.getRepuestosDeluxe().getRepuestosLlantas()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosLlantas[repuesto2] = valor4
-			
-            elif tipo == "Carroceria":
-                valor1 = self.getInventario().getRepuestosDeluxe().getRepuestosCarroceria()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosCarroceria[repuesto,] = valor1
-                valor2 = self.getInventario().getRepuestosDeluxe().getRepuestosCarroceria()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosDeluxe().repuestosCarroceria[repuesto2] = valor2
-				
-                valor3 = proveedor.getRepuestosDeluxe().getRepuestosCarroceria()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosCarroceria[repuesto] = valor3
-                valor4 = proveedor.getRepuestosDeluxe().getRepuestosCarroceria()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosDeluxe().repuestosCarroceria[repuesto2] = valor4
-
-        elif categoria == "Generico":
-            if tipo == "Motor":
-                valor1 = self.getInventario().getRepuestosGenericos().getRepuestosMotor()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosMotor[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosGenericos().getRepuestosMotor()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosMotor[repuesto2] = valor2
-					
-                valor3 = proveedor.getRepuestosGenericos().getRepuestosMotor()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosMotor[repuesto] = valor3
-                valor4 = proveedor.getRepuestosGenericos().getRepuestosMotor()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosMotor[repuesto2] = valor4
-			
-            elif tipo == "Frenos":
-                valor1 = self.getInventario().getRepuestosGenericos().getRepuestosFrenos()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosFrenos[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosGenericos().getRepuestosFrenos()[repuesto2]
-                valor2 = valor2 + cantidad
-                self.getInventario().getRepuestosGenericos().repuestosFrenos[repuesto2] = valor2
-                valor3 = proveedor.getRepuestosGenericos().getRepuestosFrenos()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosFrenos[repuesto] = valor3
-                valor4 = proveedor.getRepuestosGenericos().getRepuestosFrenos()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosFrenos[repuesto2] = valor4
-			
-            elif tipo == "Electrico":
-                valor1 = self.getInventario().getRepuestosGenericos().getRepuestosElectrico()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosElectrico[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosGenericos().getRepuestosElectrico()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosElectrico[repuesto2] = valor2
-			
-                valor3 = proveedor.getRepuestosGenericos().getRepuestosElectrico()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosElectrico[repuesto] = valor3
-                valor4 = proveedor.getRepuestosGenericos().getRepuestosElectrico()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosElectrico[repuesto2] = valor4
-
-            elif tipo == "Llantas":
-                valor1 = self.getInventario().getRepuestosGenericos().getRepuestosLlantas()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosLlantas[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosGenericos().getRepuestosLlantas()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosLlantas[repuesto2] = valor2
-				
-                valor3 = proveedor.getRepuestosGenericos().getRepuestosLlantas()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosLlantas[repuesto] = valor3
-                valor4 = proveedor.getRepuestosGenericos().getRepuestosLlantas()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosLlantas[repuesto2] = valor4
-		
-            elif tipo == "Carroceria":
-                valor1 = self.getInventario().getRepuestosGenericos().getRepuestosCarroceria()[repuesto]
-                valor1 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosCarroceria[repuesto] = valor1
-                valor2 = self.getInventario().getRepuestosGenericos().getRepuestosCarroceria()[repuesto2]
-                valor2 += cantidad
-                self.getInventario().getRepuestosGenericos().repuestosCarroceria[repuesto2] = valor2
-                valor3 = proveedor.getRepuestosGenericos().getRepuestosCarroceria()[repuesto]
-                valor3 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosCarroceria[repuesto] = valor3
-                valor4 = proveedor.getRepuestosGenericos().getRepuestosCarroceria()[repuesto2]
-                valor4 -= cantidad
-                proveedor.getRepuestosGenericos().repuestosCarroceria[repuesto2] = valor4
-
     def proveedoresDisponiblesRepuestosDeluxe(self, tipo):
         proveedoresDisponibles = []
         if (tipo == "Motor"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadMotor("Bujia") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadMotor("Filtro de aceite")):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Motor","Bujia") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadMotor("Filtro de aceite")):
                     proveedoresDisponibles.append(self._proveedores[i])
 				
         elif (tipo == "Frenos"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadFrenos("Pastilla de frenos") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadFrenos("Liquido de frenos")):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Frenos","Pastilla de frenos") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadFrenos("Liquido de frenos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Electrico"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadElectrico("Bateria") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadElectrico("Focos")):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Electrico","Bateria") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadElectrico("Focos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Llantas"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadLlantas("Valvula") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadLlantas("Tapa de la valvula")):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Llantas","Valvula") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadLlantas("Tapa de la valvula")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Carroceria"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadCarroceria("Pintura") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadCarroceria("Espejos")):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Carroceria","Pintura") and self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadCarroceria("Espejos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         return proveedoresDisponibles
@@ -472,27 +315,27 @@ class Administrador:
         proveedoresDisponibles = []
         if (tipo == "Motor"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadMotor(clave)):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Motor",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 				
         elif (tipo == "Frenos"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadFrenos(clave)):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Frenos",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Electrico"):	
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadElectrico(clave)):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Electrico",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Llantas"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadLlantas(clave)):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Llantas",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Carroceria"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidadCarroceria(clave)):
+                if (self._proveedores[i].getRepuestosDeluxe().verificarDisponibilidad("Carroceria",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
                     
         return proveedoresDisponibles
@@ -509,27 +352,27 @@ class Administrador:
         proveedoresDisponibles = []
         if (tipo == "Motor"):
             for i in range(len(self._proveedores)): 
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadMotor("Bujia") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadMotor("Filtro de aceite")):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Motor","Bujia") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadMotor("Filtro de aceite")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Frenos"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadFrenos("Pastilla de frenos") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadFrenos("Liquido de frenos")):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Frenos","Pastilla de frenos") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadFrenos("Liquido de frenos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Electrico"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadElectrico("Bateria") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadElectrico("Focos")):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Electrico","Bateria") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadElectrico("Focos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Llantas"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadLlantas("Valvula") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadLlantas("Tapa de la valvula")):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Llantas","Valvula") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadLlantas("Tapa de la valvula")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         elif (tipo == "Carroceria"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadCarroceria("Pintura") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadCarroceria("Espejos")):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Carroceria","Pintura") and self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadCarroceria("Espejos")):
                     proveedoresDisponibles.append(self._proveedores[i])
 
         return proveedoresDisponibles
