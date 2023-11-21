@@ -637,7 +637,7 @@ class VentanaUsuario:
         self.label2.config(text="¡Tu opinion nos ayudara a mejorar!")
 
         criterios_nuevos = ["Nombre", "Mecanico"]
-        valores_iniciales_nuevos = ["Raul", "Fernando Miguel"]
+        valores_iniciales_nuevos = [" ", " "]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
