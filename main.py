@@ -166,7 +166,13 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
-            self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+            except ErrorCasillasVacias as f:
+                self.ventana_usuario.mostrarError(f.display())
 
         elif self.ventana_usuario.idFun == 2.1:
             self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
