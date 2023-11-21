@@ -227,7 +227,13 @@ class FieldFrame(tk.Frame):
                 ventanaError(v.display())
             
         elif self.ventana_usuario.idFun == 3.1:
-            self.ventana_usuario.funcionalidad3_2(self.valores)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad3_2(self.valores)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
               
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
