@@ -103,7 +103,9 @@ class FieldFrame(tk.Frame):
         self.valores = valores
                 
         self._clienteCreado = None
-        self._antiguosValores = list()
+        self._vehiculo = ""
+        self._categoria = ""
+        self._mecanico = ""
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -144,10 +146,30 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 1
         elif self.ventana_usuario.idFun == 1:
+            self._vehiculo = self.valores[1]
+            self._categoria = self.valores[0]
+            self._mecanico == self.valores[3]
             self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
         
         elif self.ventana_usuario.idFun == 1.1:
-            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, self.valores)
+            precio = 0
+            if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
+                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+            elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
+                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+            elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
+                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+            elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
+                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+            print(precio)
+            orden = self._clienteCreado.crearOrden(self._clienteCreado.getVehiculos()[0], self._mecanico, admin, precio)
+            orden.setRepuesto(self.valores[0])
+            print(orden)
+            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, precio)
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
@@ -204,6 +226,18 @@ class FieldFrame(tk.Frame):
             self.ventana_usuario.funcionalidad4_3()
         
         ###########todo funcionalidad 5
+        elif self.ventana_usuario.idFun == 5:
+            self.ventana_usuario.funcionalidad5_1()
+        elif self.ventana_usuario.idFun == 5.1:
+            self.ventana_usuario.funcionalidad5_2()
+        elif self.ventana_usuario.idFun == 5.2:
+            self.ventana_usuario.funcionalidad5_3()
+        elif self.ventana_usuario.idFun == 5.3:
+            self.ventana_usuario.funcionalidad5_4()
+        elif self.ventana_usuario.idFun == 5.4:
+            self.ventana_usuario.funcionalidad5_5()
+        
+        
         
         
         
@@ -238,8 +272,10 @@ class VentanaUsuario:
         self.ventana1.config(menu=menubar1)
 
         self.idFun = 0
+        self._vehiculo = ""
         self._tipoRep = ""
         self._categoria = ""
+        self._mecanico = ""
         
         opciones1 = tk.Menu(menubar1, tearoff=0)
         menubar1.add_cascade(label="Archivo", menu=opciones1)
@@ -294,7 +330,11 @@ class VentanaUsuario:
     def funcionalidad1_1(self, valores):
         if not(valores[1] == "Carro" or valores[1] == "Moto"):
             #Error debido a que no se eligio un vehiculo posible
-            pass
+            return
+        self._categoria = valores[0]
+        self._vehiculo = valores[1]
+        self._tipoRep = valores[2]
+        self._mecanico = valores[3]
         
         cliente = Clientes(valores[0], Vehiculo(valores[1], None))
         cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
@@ -320,10 +360,9 @@ class VentanaUsuario:
         self.idFun = 1.1
         return cliente
 
-    def funcionalidad1_2(self, cliente, valores):
-         #setTipoDeDanio(valores[0], admin)
-        
-        self.label2.config(text="Repuestos disponibles: \n")
+    def funcionalidad1_2(self, cliente, precio):
+        self.frame2.destroy()
+        self.label2.config(text="Precio: "+precio)
 
         
     def funcionalidad2(self):
@@ -598,7 +637,7 @@ class VentanaUsuario:
         self.label2.config(text="¡Tu opinion nos ayudara a mejorar!")
 
         criterios_nuevos = ["Nombre", "Mecanico"]
-        valores_iniciales_nuevos = ["Raul", "Fernando Miguel"]
+        valores_iniciales_nuevos = [" ", " "]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -608,6 +647,77 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
 
         self.idFun = 5
+
+    def funcionalidad5_1(self):
+        self.label1.config(text=f"Gracias por haber \nrealizado un servicio con nosotros!")
+        self.label2.config(text="Del 1 al 5 que tal calificas nuestro servicio?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.1
+
+    def funcionalidad5_2(self):
+        self.label1.config(text=f"Siempre nos aseguramos \nde usar los repuestos de mayor calidad!")
+        self.label2.config(text="Del 1 al 5 que tal calificas nuestros repuestos?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.2
+    
+    def funcionalidad5_3(self):
+        self.label1.config(text=f"Nuestro objetivo es tener el\n personal más capacitado del mercado!")
+        self.label2.config(text="Del 1 al 5 que tal calificas el mecánico que te atendió?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.3
+    
+    def funcionalidad5_4(self):
+        self.label1.config(text="Gracias por realizar esta encuesta!")
+        self.label2.config(text="Deseas dar una comisión extra al mecanico que te atendió?")
+
+        criterios_nuevos = ["Comisión"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.4
+
+    def funcionalidad5_5(self):
+        self.frame2.destroy()
+        self.label1.config(text="Muchas gracias!")
+        self.label2.config(text="Esperamos que vuelvas pronto")
+
+    
 
     def actualizar_label(self):
         self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
