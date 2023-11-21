@@ -107,6 +107,8 @@ class FieldFrame(tk.Frame):
         self._vehiculo = ""
         self._categoria = ""
         self._mecanico = ""
+        self._clienteCalificando = ""
+        self._mecanicoCalificado = ""
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -223,14 +225,39 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 5
         elif self.ventana_usuario.idFun == 5:
-            self.ventana_usuario.funcionalidad5_1()
+            if admin.getClienteNombre(self.valores[0]) is not None and admin.asignarMecanico(self.valores[1] is not None):
+                self._clienteCalificando = admin.getClienteNombre(self.valores[0])
+                self._mecanicoCalificado = admin.asignarMecanico(self.valores[1])
+                self.ventana_usuario.funcionalidad5_1()
+            else:
+                pass
         elif self.ventana_usuario.idFun == 5.1:
+            self._clienteCalificando.calificarTaller(admin, self.valores[0])
             self.ventana_usuario.funcionalidad5_2()
         elif self.ventana_usuario.idFun == 5.2:
+            if self.valores[0] > 3:
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
+
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
+
             self.ventana_usuario.funcionalidad5_3()
         elif self.ventana_usuario.idFun == 5.3:
+            if self.valores[0] > 3:
+                self._mecanicoCalificado.recibirComision(1000)
+
             self.ventana_usuario.funcionalidad5_4()
         elif self.ventana_usuario.idFun == 5.4:
+            if self.valores[0] > 0:
+                self._mecanicoCalificado.recibirComision(self.valores[0])
+                self._clienteCalificando.pagar(self.valores[0])
             self.ventana_usuario.funcionalidad5_5()
         
         
