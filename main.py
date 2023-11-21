@@ -159,10 +159,38 @@ class FieldFrame(tk.Frame):
 
         ###########todo funcionalidad 3
         elif self.ventana_usuario.idFun == 3:
-            self.ventana_usuario.funcionalidad3_1(self.valores)
+            repuestos = []
+            respuestosD = ""
+            indice = 1
+            if self.valores[0] == "Deluxe":
+                for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1]))):
+                    repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1])
+                
+            elif self.valores[0] == "Generico":
+                for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1]))):
+                    repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
+            
+            for rep in repuestos:
+                respuestosD += indice + ". " + rep + "\n"
+                indice += 1
+            
+            self.ventana_usuario.funcionalidad3_1(respuestosD)
             
         if self.ventana_usuario.idFun == 3.1:
+        #    if(antiguosValores[0] == "Deluxe"):		
+        #    for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0]))):         							
+        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0])
+	    #        					
+        #elif (antiguosValores[0] == "Generico"):    						
+        #    for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0]))):
+        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0])
+    
+        #try:
+        #    admin.solicitarRepuestos(antiguosValores[0], antiguosValores[1], valores[0], 1, valores[1])
+        #except:
+        #    self.label2.config(text="Error")
             self.ventana_usuario.funcionalidad3_2(self.valores)
+            
         
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
@@ -384,27 +412,11 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 3
         
-    def funcionalidad3_1(self, valores):
-        repuestos = []
+    def funcionalidad3_1(self, repuestosD):
         self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
-        categoria = valores[0]
-        tipoRepuesto = valores[1]
         
-        respuestosD = ""
-        indice = 1
-        if valores[0] == "Deluxe":
-            for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(tipoRepuesto))):
-                repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(tipoRepuesto)
-            
-        elif valores[0] == "Generico":
-            for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(tipoRepuesto))):
-                repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(tipoRepuesto)
-                
-        for rep in repuestos:
-            respuestosD += indice + ". " + rep + "\n"
-            indice += 1
         
-        self.label2.config(text="Escoja respuestos: " + respuestosD)
+        self.label2.config(text="Escoja respuestos: " + repuestosD)
         
         criterios_nuevos = ["Repuesto", "Proveedor"]
         valores_iniciales_nuevos = ["", ""]
@@ -419,18 +431,7 @@ class VentanaUsuario:
         
     def funcionalidad3_2(self, valores):
         pass
-        #if(antiguosValores[0] == "Deluxe"):		
-        #    for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0]))):         							
-        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosDeluxe(antiguosValores[1], valores[0])
-	    #        					
-        #elif (antiguosValores[0] == "Generico"):    						
-        #    for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0]))):
-        #        proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(antiguosValores[1],valores[0])
-    
-        #try:
-        #    admin.solicitarRepuestos(antiguosValores[0], antiguosValores[1], valores[0], 1, valores[1])
-        #except:
-        #    self.label2.config(text="Error")
+        #
 
 	            				
     def funcionalidad4(self):
