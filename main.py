@@ -103,7 +103,9 @@ class FieldFrame(tk.Frame):
         self.valores = valores
                 
         self._clienteCreado = None
-        self._antiguosValores = list()
+        self._vehiculo = ""
+        self._categoria = ""
+        self._mecanico = ""
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -144,10 +146,32 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 1
         elif self.ventana_usuario.idFun == 1:
+            self._vehiculo = self.valores[1]
+            self._categoria = self.valores[0]
+            self._mecanico == self.valores[3]
             self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
         
         elif self.ventana_usuario.idFun == 1.1:
-            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, self.valores)
+            self.ventana_usuario.funcionalidad1_2(self._clienteCreado)
+            
+        elif self.ventana_usuario.idFun == 1.2:
+            precio = 0
+            if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
+                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+            elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
+                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+            elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
+                precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+                                    
+            elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
+                precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
+
+            print(precio)
+            orden = self._clienteCreado.crearOrden(self._clienteCreado.getVehiculos()[0], self._mecanico, admin, precio)
+            orden.setRepuesto(self.valores[0])
+            print(orden)
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
@@ -238,8 +262,10 @@ class VentanaUsuario:
         self.ventana1.config(menu=menubar1)
 
         self.idFun = 0
+        self._vehiculo = ""
         self._tipoRep = ""
         self._categoria = ""
+        self._mecanico = ""
         
         opciones1 = tk.Menu(menubar1, tearoff=0)
         menubar1.add_cascade(label="Archivo", menu=opciones1)
@@ -294,7 +320,11 @@ class VentanaUsuario:
     def funcionalidad1_1(self, valores):
         if not(valores[1] == "Carro" or valores[1] == "Moto"):
             #Error debido a que no se eligio un vehiculo posible
-            pass
+            return
+        self._categoria = valores[0]
+        self._vehiculo = valores[1]
+        self._tipoRep = valores[2]
+        self._mecanico = valores[3]
         
         cliente = Clientes(valores[0], Vehiculo(valores[1], None))
         cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
@@ -320,10 +350,17 @@ class VentanaUsuario:
         self.idFun = 1.1
         return cliente
 
-    def funcionalidad1_2(self, cliente, valores):
-         #setTipoDeDanio(valores[0], admin)
+    def funcionalidad1_2(self, cliente):
         
-        self.label2.config(text="Repuestos disponibles: \n")
+        criterios_nuevos = ["Repuesto"]
+        valores_iniciales_nuevos = ["1/2"]
+        habilitado_nuevos = [True]
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+        self.idFun = 1.2
 
         
     def funcionalidad2(self):
