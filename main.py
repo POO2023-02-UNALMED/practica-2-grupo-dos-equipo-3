@@ -474,6 +474,7 @@ class VentanaUsuario:
         
     def funcionalidad1_2(self, valores):
         #try:
+            print(admin.getInventario().getRepuestosDeluxe().obtenerPrecio('Motor','Bujia'))
             for i in self._repuestosD:
                 if i == valores[0]:
                     precio = 0
