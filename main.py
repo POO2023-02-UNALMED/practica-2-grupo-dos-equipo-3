@@ -11,6 +11,7 @@ from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import RepuestosDeluxe
 from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
 from src.errores.errorCasillasVacias import ErrorCasillasVacias
+from src.errores.errorVElejido import ErrorVehiculoElejido
 
 
 admin = Administrador()
@@ -157,7 +158,10 @@ class FieldFrame(tk.Frame):
                 self._vehiculo = self.valores[1]
                 self._categoria = self.valores[0]
                 self._mecanico == self.valores[3]
-                self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                try:
+                    self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                except ErrorVehiculoElejido as v:
+                    self.ventana_usuario.mostrarError(v.display())
             except ErrorCasillasVacias as f:
                 self.ventana_usuario.mostrarError(f.display())
         
@@ -361,40 +365,43 @@ class VentanaUsuario:
         self.idFun = 1
 
     def funcionalidad1_1(self, valores):
-        if not(valores[1] == "Carro" or valores[1] == "Moto"):
-            #Error debido a que no se eligio un vehiculo posible
-            return
-        self._categoria = valores[0]
-        self._vehiculo = valores[1]
-        self._tipoRep = valores[2]
-        self._mecanico = valores[3]
-        
-        cliente = Clientes(valores[0], Vehiculo(valores[1], None))
-        cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
-        repuestos = ""
-        id = 1
-        lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
-        for rep in lista:
-            repuestos += id + ". " + rep
-            id += 1
-        
-        self.label2.config(text="Repuestos disponibles: " + repuestos)
-        
+        try:
+            if not(valores[1] == "Carro" or valores[1] == "Moto"):
+                raise ErrorVehiculoElejido()
+            else:
+                self._categoria = valores[0]
+                self._vehiculo = valores[1]
+                self._tipoRep = valores[2]
+                self._mecanico = valores[3]
+                
+                cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+                cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
+                repuestos = ""
+                id = 1
+                lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+                for rep in lista:
+                    repuestos += id + ". " + rep
+                    id += 1
+                
+                self.label2.config(text="Repuestos disponibles: " + repuestos)
+                
 
-        criterios_nuevos = ["Repuesto"]
-        valores_iniciales_nuevos = ["1/2"]
-        habilitado_nuevos = [True]
+                criterios_nuevos = ["Repuesto"]
+                valores_iniciales_nuevos = ["1/2"]
+                habilitado_nuevos = [True]
 
-        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+                nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
-        self.frame2.destroy()
-        self.frame2 = nuevo_frame2
-        self.frame2.pack(padx=10, pady=10)
-        self.idFun = 1.1
+                self.frame2.destroy()
+                self.frame2 = nuevo_frame2
+                self.frame2.pack(padx=10, pady=10)
+                self.idFun = 1.1
+                
+                self._cliente = cliente
+                return cliente       
+        except ErrorVehiculoElejido:
+            raise ErrorVehiculoElejido()
         
-        self._cliente = cliente
-        return cliente
-
     def funcionalidad1_2(self, valores):
         precio = 0
         if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
