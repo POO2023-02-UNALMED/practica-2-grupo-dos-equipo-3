@@ -17,6 +17,7 @@ from src.errores.errorNone import ErrorNoOrdenes,ErrorClienteNone,ErrorMecanicoN
 from src.errores.errorTipoDato import ErrorDato
 from src.uiMain.ventanaError import ventanaError
 from src.errores.errorRepElejido import ErrorRepuestoElejido
+from src.errores.ErrorCatElejida import ErrorCategoriaElejido
 
 
 admin = Administrador()
@@ -198,32 +199,74 @@ class FieldFrame(tk.Frame):
 
         ###########todo funcionalidad 3
         elif self.ventana_usuario.idFun == 3:
-            repuestos = []
-            respuestosD = ""
-            indice = 1
-            if self.valores[0] == "Deluxe":
-                for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1]))):
-                    repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1])
-                
-            elif self.valores[0] == "Generico":
-                for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1]))):
-                    repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
-            
-            for rep in repuestos:
-                respuestosD += f"{indice}.{rep}\n"
-                indice += 1
-            self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                if not(self.valores[0] == "Deluxe" or self.valores[0] == "Generico"):
+                    raise ErrorCategoriaElejido()
+                else:
+                    repuestos = []
+                    respuestosD = ""
+                    indice = 1
+                    if self.valores[0] == "Deluxe":
+                        for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1]))):
+                            repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1])
+                        
+                    elif self.valores[0] == "Generico":
+                        for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1]))):
+                            repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
+                    
+                    for rep in repuestos:
+                        respuestosD += f"{indice}.{rep}\n"
+                        indice += 1
+                    self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
+            except ErrorCategoriaElejido as v:
+                ventanaError(v.display())
             
         elif self.ventana_usuario.idFun == 3.1:
-            self.ventana_usuario.funcionalidad3_2(self.valores)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad3_2(self.valores)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
               
         ###########todo funcionalidad 4
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
             self.ventana_usuario.funcionalidad4_1()
 
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == '':      
+            try: 
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == '':
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        
         elif self.ventana_usuario.idFun == 4.1:
-            self.ventana_usuario.funcionalidad4_1Final(self.valores)
-                
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_1Final(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+            
         elif self.ventana_usuario.idFun == 4 and self.valores[0] == "2" :
             self.ventana_usuario.funcionalidad4_2()
 
@@ -479,16 +522,16 @@ class VentanaUsuario:
                 if i == valores[0]:
                     precio = 0
                 if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
 
                 elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
                                             
                 elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
+                    precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
                                             
                 elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
+                    precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
 
                 print(self._cliente)
                 orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
