@@ -152,9 +152,6 @@ class FieldFrame(tk.Frame):
             self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
         
         elif self.ventana_usuario.idFun == 1.1:
-            self.ventana_usuario.funcionalidad1_2(self._clienteCreado)
-            
-        elif self.ventana_usuario.idFun == 1.2:
             precio = 0
             if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
                 precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self.valores[0], self._clienteCreado.getVehiculos()[0].getTipoDeDanio().getTipo())
@@ -172,6 +169,7 @@ class FieldFrame(tk.Frame):
             orden = self._clienteCreado.crearOrden(self._clienteCreado.getVehiculos()[0], self._mecanico, admin, precio)
             orden.setRepuesto(self.valores[0])
             print(orden)
+            self.ventana_usuario.funcionalidad1_2(self._clienteCreado, precio)
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
@@ -362,17 +360,9 @@ class VentanaUsuario:
         self.idFun = 1.1
         return cliente
 
-    def funcionalidad1_2(self, cliente):
-        
-        criterios_nuevos = ["Repuesto"]
-        valores_iniciales_nuevos = ["1/2"]
-        habilitado_nuevos = [True]
-        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
-
+    def funcionalidad1_2(self, cliente, precio):
         self.frame2.destroy()
-        self.frame2 = nuevo_frame2
-        self.frame2.pack(padx=10, pady=10)
-        self.idFun = 1.2
+        self.label2.config(text="Precio: "+precio)
 
         
     def funcionalidad2(self):
