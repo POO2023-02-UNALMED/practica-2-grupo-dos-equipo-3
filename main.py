@@ -280,9 +280,9 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
 
-        criterios_nuevos = ["Nombre", "Vehiculo"]
-        valores_iniciales_nuevos = ["Generico/Deluxe",""]
-        habilitado_nuevos = [True, True]
+        criterios_nuevos = ["Nombre", "Vehiculo", "TipoDaño", "Mecanico"]
+        valores_iniciales_nuevos = ["Generico/Deluxe","","Motor/Frenos/...",""]
+        habilitado_nuevos = [True, True, True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -296,14 +296,21 @@ class VentanaUsuario:
             #Error debido a que no se eligio un vehiculo posible
             pass
         
-        #cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+        cliente = Clientes(valores[0], Vehiculo(valores[1], None))
+        cliente.getVehiculos()[0].setTipoDeDanio(valores[2], admin)
+        repuestos = ""
+        id = 1
+        lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+        for rep in lista:
+            repuestos += id + ". " + rep
+            id += 1
         
-        self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
-        self.label2.config(text="Ingresa, que deseas hacer hoy")
+        self.label2.config(text="Repuestos disponibles: " + repuestos)
+        
 
-        criterios_nuevos = ["Tipo de daño","Nombre mecanico"]
-        valores_iniciales_nuevos = ["Motor/Frenos",""]
-        habilitado_nuevos = [True, True]
+        criterios_nuevos = ["Repuesto"]
+        valores_iniciales_nuevos = [""]
+        habilitado_nuevos = [True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
 
@@ -311,10 +318,10 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1.1
-        return None#cliente
+        return cliente
 
     def funcionalidad1_2(self, cliente, valores):
-        cliente.getVehiculos()[0].setTipoDeDanio(valores[0], None) #setTipoDeDanio(valores[0], admin)
+         #setTipoDeDanio(valores[0], admin)
         
         self.label2.config(text="Repuestos disponibles: \n")
 

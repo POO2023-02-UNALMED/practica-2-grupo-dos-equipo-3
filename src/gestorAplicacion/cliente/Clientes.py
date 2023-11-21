@@ -15,7 +15,7 @@ class Clientes(CalificacionMecanico):
         self._ordenes = []
         
         self._nombre = nombre
-        self.vehiculos.append(vehiculo)
+        self._vehiculos.append(vehiculo)
         self._id = Clientes.asignadorId
         Clientes.asignadorId += 1
         Clientes.clientes.append(self)
