@@ -206,6 +206,88 @@ class RepuestosDeluxe(Repuestos):
 
                     return repuesto[2]
 
-        
+    def obtenerCantidad(self, tiporepuesto, repuesto):
 
+        if (tiporepuesto == "Motor"):
+
+            for repuesto in self._repuestosMotor:
+
+                if repuesto[0] == repuesto:
+
+                    return repuesto[1]
+                
+        elif (tiporepuesto == "Frenos"):
+
+            for repuesto in self._repuestosFrenos:
+
+                if repuesto[0] == repuesto:
+
+                    return repuesto[1]
+                
+        elif (tiporepuesto == "Electrico"):
+
+            for repuesto in self._repuestosElectrico:
+
+                if repuesto[0] == repuesto:
+
+                    return repuesto[1]
+        
+        elif (tiporepuesto == "Llantas"):
+
+            for repuesto in self._repuestosLlantas:
+
+                if repuesto[0] == repuesto:
+
+                    return repuesto[1]
+                
+        elif (tiporepuesto == "Carroceria"):
+
+            for repuesto in self._repuestosCarroceria:
+
+                if repuesto[0] == repuesto:
+
+                    return repuesto[1]
+
+        def aumentarCantidad(self, cantidad, tipo, repuesto):
+
+            if (tiporepuesto == "Motor"):
+
+                for repuesto in self._repuestosMotor:
+
+                    if repuesto[0] == repuesto:
+
+                        repuesto[1] += cantidad
+                
+            elif (tiporepuesto == "Frenos"):
+
+                for repuesto in self._repuestosFrenos:
+
+                     if repuesto[0] == repuesto:
+
+                         repuesto[1] += cantidad
+                        
+            elif (tiporepuesto == "Electrico"):
+
+                for repuesto in self._repuestosElectrico:
+
+                    if repuesto[0] == repuesto:
+
+                        repuesto[1] += cantidad
+                
+            elif (tiporepuesto == "Llantas"):
+
+                for repuesto in self._repuestosLlantas:
+
+                    if repuesto[0] == repuesto:
+
+                         repuesto[1] += cantidad
+                        
+            elif (tiporepuesto == "Carroceria"):
+
+                for repuesto in self._repuestosCarroceria:
+
+                    if repuesto[0] == repuesto:
+
+                         repuesto[1] += cantidad
+            
 

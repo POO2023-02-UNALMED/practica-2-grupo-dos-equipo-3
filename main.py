@@ -228,6 +228,18 @@ class FieldFrame(tk.Frame):
             self.ventana_usuario.funcionalidad4_3()
         
         ###########todo funcionalidad 5
+        elif self.ventana_usuario.idFun == 5:
+            self.ventana_usuario.funcionalidad5_1()
+        elif self.ventana_usuario.idFun == 5.1:
+            self.ventana_usuario.funcionalidad5_2()
+        elif self.ventana_usuario.idFun == 5.2:
+            self.ventana_usuario.funcionalidad5_3()
+        elif self.ventana_usuario.idFun == 5.3:
+            self.ventana_usuario.funcionalidad5_4()
+        elif self.ventana_usuario.idFun == 5.4:
+            self.ventana_usuario.funcionalidad5_5()
+        
+        
         
         
         
@@ -645,6 +657,77 @@ class VentanaUsuario:
         self.frame2.pack(padx=10, pady=10)
 
         self.idFun = 5
+
+    def funcionalidad5_1(self):
+        self.label1.config(text=f"Gracias por haber \nrealizado un servicio con nosotros!")
+        self.label2.config(text="Del 1 al 5 que tal calificas nuestro servicio?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.1
+
+    def funcionalidad5_2(self):
+        self.label1.config(text=f"Siempre nos aseguramos \nde usar los repuestos de mayor calidad!")
+        self.label2.config(text="Del 1 al 5 que tal calificas nuestros repuestos?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.2
+    
+    def funcionalidad5_3(self):
+        self.label1.config(text=f"Nuestro objetivo es tener el\n personal más capacitado del mercado!")
+        self.label2.config(text="Del 1 al 5 que tal calificas el mecánico que te atendió?")
+
+        criterios_nuevos = ["Calificación"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.3
+    
+    def funcionalidad5_4(self):
+        self.label1.config(text="Gracias por realizar esta encuesta!")
+        self.label2.config(text="Deseas dar una comisión extra al mecanico que te atendió?")
+
+        criterios_nuevos = ["Comisión"]
+        valores_iniciales_nuevos = ["0"]
+        habilitado_nuevos = [True]
+
+        nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
+
+        self.frame2.destroy()
+        self.frame2 = nuevo_frame2
+        self.frame2.pack(padx=10, pady=10)
+
+        self.idFun = 5.4
+
+    def funcionalidad5_5(self):
+        self.frame2.destroy()
+        self.label1.config(text="Muchas gracias!")
+        self.label2.config(text="Esperamos que vuelvas pronto")
+
+    
 
     def actualizar_label(self):
         self.label2.config(text="Por favor, selecciona una consulta para comenzar", font=("Arial", 10))
