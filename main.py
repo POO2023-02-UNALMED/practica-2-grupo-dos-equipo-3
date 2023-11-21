@@ -1,4 +1,5 @@
 import tkinter as tk
+from src.gestorAplicacion.tallerMecanica.Orden import Orden
 
 from src.uiMain.ventanaError import ventanaError
 from src.gestorAplicacion.cliente.Clientes import Clientes
@@ -693,7 +694,7 @@ class VentanaUsuario:
         self.label2.config(text="Escoja respuestos: \n" + repuestosD)
         
         criterios_nuevos = ["Repuesto", "Proveedor"]
-        valores_iniciales_nuevos = ["", ""]
+        valores_iniciales_nuevos = ["(Nombre repuesto)", ""]
         habilitado_nuevos = [True, True]
 
         nuevo_frame2 = FieldFrame(self, "Criterio", criterios_nuevos, "Valor", valores_iniciales_nuevos, habilitado_nuevos)
@@ -705,19 +706,27 @@ class VentanaUsuario:
         
     def funcionalidad3_2(self, valores):
         self.frame2.destroy()
-        print(self._tipoRep)
+        precio = 0
+        proveedor_lista = []
         if(self._tipoRep == "Deluxe"):		
             for i in range(len(admin.proveedoresDisponiblesRepuestosDeluxe(self._categoria, valores[0]))):         							
                 proveedor_lista = admin.proveedoresDisponiblesRepuestosDeluxe(self._categoria, valores[0])
-	            					
+            precio = proveedor_lista[0].getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
         elif (self._tipoRep == "Generico"):    						
             for i in range(len(admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0]))):
                 proveedor_lista = admin.proveedoresDisponiblesRepuestosGenerico(self._categoria,valores[0])
-
+            precio = proveedor_lista[0].getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
+        
         cantidad = 1
-        print(valores[0],valores[1])
-        admin.solicitarRepuestos(categoria=self._categoria,tipo=self._tipoRep, repuesto=valores[0], cantidad=cantidad, proveedor_nombre=valores[1])
-        self.label2.config(text="Solicitud exitosa")
+        try:
+            orden_repuesto = Orden("Repuestos", precio)
+            orden_repuesto.setRepuesto(valores[0])
+            
+            admin.solicitarRepuestos(categoria=self._categoria,tipo=self._tipoRep, repuesto=valores[0], cantidad=cantidad, proveedor_nombre=valores[1])
+            admin.getInventario().pagar(precio)
+            self.label2.config(text="Solicitud exitosa")
+        except Exception as e:
+            print(e)
 	            				
     def funcionalidad4(self):
         self.label1.config(text="Generar resumen financiero", font=("Arial", 16))
