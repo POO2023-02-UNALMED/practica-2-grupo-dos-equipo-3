@@ -102,327 +102,6 @@ admin.setProveedores(proveedores)
 admin.setInventario(inventario)
 admin.setMecanicos(mecanicos)
 
-class FieldFrame(tk.Frame):
-    def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
-        super().__init__()
-
-        self.ventana_usuario = ventana_usuario
-        self.criterios = criterios
-        self.valores = valores
-                
-        self._clienteCreado = None
-        self._repuesto =""
-        self._vehiculo = ""
-        self._categoria = ""
-        self._mecanico = ""
-        self._clienteCalificando = ""
-        self._mecanicoCalificado = ""
-
-        # Crear etiquetas y campos usando Grid
-        for i, criterio in enumerate(criterios):
-            label = tk.Label(self, text=f"{criterio}")
-            label.grid(row=i, column=0, padx=5, pady=5, sticky="e")
-
-            if habilitado and habilitado[i] is not None and not habilitado[i]:
-                # Campo no editable
-                entry = tk.Entry(self, state="disabled")
-            else:
-                # Campo editable
-                entry = tk.Entry(self)
-
-            # Asignar valor inicial si se proporciona
-            if valores and valores[i] is not None:
-                entry.insert(0, valores[i])
-
-            entry.grid(row=i, column=1, padx=5, pady=5, sticky="w")
-
-        # Botones Aceptar y Borrar
-        self.boton_aceptar = tk.Button(self, text="Aceptar", command=self.aceptar)
-        self.boton_borrar = tk.Button(self, text="Borrar", command=self.borrar)
-
-        self.boton_aceptar.grid(row=len(criterios), column=0, pady=5)
-        self.boton_borrar.grid(row=len(criterios), column=1, pady=5)
-
-    def aceptar(self):
-        # Guardar los valores en las variables correspondientes
-        self.valores = [entry.get() for entry in self.winfo_children() if isinstance(entry, tk.Entry)]
-        ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
-        print(self.valores)
-
-        if self.ventana_usuario.idFun == 0:
-            self.ventana_usuario.actualizar_label()
-        
-        ##metan lo suyo en donde va que después nos confundimos todos 
-        #los tqm 
-        
-        ###########todo funcionalidad 1
-        elif self.ventana_usuario.idFun == 1:
-            try:
-                for i in self.valores:
-                    if i == "":
-                        raise ErrorCasillasVacias()
-                
-                self._vehiculo = self.valores[2]
-                self._categoria = self.valores[1]
-                self._mecanico == self.valores[4]
-                try:
-                    self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
-                except ErrorVehiculoElejido as v:
-                    ventanaError(v.display())
-            except ErrorCasillasVacias as f:
-                ventanaError(f.display())
-        
-        elif self.ventana_usuario.idFun == 1.1:
-            try:
-                self.ventana_usuario.funcionalidad1_2(self.valores)
-            except ErrorRepuestoElejido as f:
-                ventanaError(f.display())
-        
-        ###########todo funcionalidad 2
-        elif self.ventana_usuario.idFun == 2:
-            try:
-                for i in self.valores:
-                    if i == "":
-                        raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
-            except ErrorCasillasVacias as f:
-                ventanaError(f.display())
-
-        elif self.ventana_usuario.idFun == 2.1:
-            self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
-
-        elif self.ventana_usuario.idFun == 2.3:
-            self.ventana_usuario.funcionalidad2_3(self.valores[0], self.valores[1])
-
-        elif self.ventana_usuario.idFun == 2.4:
-            self.ventana_usuario.funcionalidad2_4Final()     
-
-        ###########todo funcionalidad 3
-        elif self.ventana_usuario.idFun == 3:
-            try:
-                for i in self.valores:
-                    if i == "":
-                        raise ErrorCasillasVacias()
-                if not(self.valores[0] == "Deluxe" or self.valores[0] == "Generico"):
-                    raise ErrorCategoriaElejido()
-                else:
-                    repuestos = []
-                    respuestosD = ""
-                    indice = 1
-                    if self.valores[0] == "Deluxe":
-                        for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1]))):
-                            repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1])
-                        
-                    elif self.valores[0] == "Generico":
-                        for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1]))):
-                            repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
-                    
-                    for rep in repuestos:
-                        respuestosD += f"{indice}.{rep}\n"
-                        indice += 1
-                    self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
-            except ErrorCasillasVacias as f:
-                ventanaError(f.display())
-            except ErrorCategoriaElejido as v:
-                ventanaError(v.display())
-            
-        elif self.ventana_usuario.idFun == 3.1:
-            try:
-                for i in self.valores:
-                    if i == "":
-                        raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad3_2(self.valores)
-            except ErrorCasillasVacias as f:
-                ventanaError(f.display())
-              
-        ###########todo funcionalidad 4
-        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
-            self.ventana_usuario.funcionalidad4_1()
-
-        elif self.ventana_usuario.idFun == 4 and self.valores[0] == '':      
-            try: 
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-
-        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == '':
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-
-        
-        elif self.ventana_usuario.idFun == 4.1:
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad4_1Final(self.valores)
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-            
-            
-        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "2" :
-            self.ventana_usuario.funcionalidad4_2()
-
-        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "1": 
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad4_2Repuestos()
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-            
-
-        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
-            self.ventana_usuario.funcionalidad4_2Mecanicos()
-
-        elif self.ventana_usuario.idFun == 4.21: 
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad4_2RepuestosFinal(self.valores)
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-            
-        
-        elif self.ventana_usuario.idFun == 4.22: 
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-                self.ventana_usuario.funcionalidad4_2MecanicosFinal(self.valores)
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-            
-        
-        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "3":
-            self.ventana_usuario.funcionalidad4_3()
-        
-        ###########todo funcionalidad 5
-        elif self.ventana_usuario.idFun == 5:
-            try:
-                for valor in self.valores:
-                    if valor == '':
-                        raise ErrorCasillasVacias()
-                self._clienteCalificando = admin.getClienteNombre(self.valores[0])
-                self._mecanicoCalificado = admin.asignarMecanico(self.valores[1])
-                if self._clienteCalificando == None:
-                    raise ErrorClienteNone()
-                if self._mecanicoCalificado == None:
-                    raise ErrorMecanicoNone()
-                self.ventana_usuario.funcionalidad5_1()
-            except ErrorClienteNone as e:
-                ventanaError(e.display())
-            except ErrorMecanicoNone as b:
-                ventanaError(b.display())
-            except ErrorCasillasVacias as c:
-                ventanaError(c.display())
-        elif self.ventana_usuario.idFun == 5.1:
-            try:
-                if self.valores[0] == '':
-                    raise ErrorCasillasVacias()
-                calificacion = int(self.valores[0])
-                self._clienteCalificando.calificarTaller(admin, calificacion)
-                self.ventana_usuario.funcionalidad5_2()
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-        elif self.ventana_usuario.idFun == 5.2:
-            try:
-                if self.valores[0] == "":
-                    raise ErrorCasillasVacias()
-                calificacion = int(self.valores[0])
-
-                if calificacion < 0:
-                    raise ErrorDato()
-                if calificacion > 3:
-                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
-                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
-                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
-                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
-                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
-
-                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
-                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
-                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
-                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
-                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
-                self.ventana_usuario.funcionalidad5_3()
-            
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-
-
-
-            
-        elif self.ventana_usuario.idFun == 5.3:
-            try:
-              if self.valores[0] == "":
-                  raise ErrorCasillasVacias()
-              
-              calificacion = int(self.valores[0])
-              if self.valores[0] > 3:
-                self._mecanicoCalificado.recibirComision(1000)
-              self.ventana_usuario.funcionalidad5_4()
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-
-            
-        elif self.ventana_usuario.idFun == 5.4:
-            try:
-                if self.valores[0] == "":
-                    raise ErrorCasillasVacias()
-                comision = int(self.valores[0])
-           
-                self._mecanicoCalificado.recibirComision(comision)
-                self._clienteCalificando.pagar(comision)
-                self.ventana_usuario.funcionalidad5_5()
-            
-            except ErrorCasillasVacias as a:
-                ventanaError(a.display())
-            except ValueError as b:
-                raise ErrorDato()
-            except ErrorDato as c:
-                ventanaError(c.display())
-        
-        
-        
-        
-        
-
-    def borrar(self):
-        # Poner los valores en blanco o vacío
-        for entry in self.winfo_children():
-            if isinstance(entry, tk.Entry):
-                entry.delete(0, "end")
 
 class VentanaUsuario:
     def __init__(self, ventana):
@@ -1210,7 +889,327 @@ class VentanaInicial:
         VentanaUsuario(ventana_principal)
         ventana_principal.mainloop()
 
+class FieldFrame(tk.Frame):
+    def __init__(self, ventana_usuario, tituloCriterios, criterios, tituloValores, valores, habilitado):
+        super().__init__()
 
+        self.ventana_usuario = ventana_usuario
+        self.criterios = criterios
+        self.valores = valores
+                
+        self._clienteCreado = None
+        self._repuesto =""
+        self._vehiculo = ""
+        self._categoria = ""
+        self._mecanico = ""
+        self._clienteCalificando = ""
+        self._mecanicoCalificado = ""
+
+        # Crear etiquetas y campos usando Grid
+        for i, criterio in enumerate(criterios):
+            label = tk.Label(self, text=f"{criterio}")
+            label.grid(row=i, column=0, padx=5, pady=5, sticky="e")
+
+            if habilitado and habilitado[i] is not None and not habilitado[i]:
+                # Campo no editable
+                entry = tk.Entry(self, state="disabled")
+            else:
+                # Campo editable
+                entry = tk.Entry(self)
+
+            # Asignar valor inicial si se proporciona
+            if valores and valores[i] is not None:
+                entry.insert(0, valores[i])
+
+            entry.grid(row=i, column=1, padx=5, pady=5, sticky="w")
+
+        # Botones Aceptar y Borrar
+        self.boton_aceptar = tk.Button(self, text="Aceptar", command=self.aceptar)
+        self.boton_borrar = tk.Button(self, text="Borrar", command=self.borrar)
+
+        self.boton_aceptar.grid(row=len(criterios), column=0, pady=5)
+        self.boton_borrar.grid(row=len(criterios), column=1, pady=5)
+
+    def aceptar(self):
+        # Guardar los valores en las variables correspondientes
+        self.valores = [entry.get() for entry in self.winfo_children() if isinstance(entry, tk.Entry)]
+        ##LA IDEA SERIA ACÄ USAR LOS METODOS Y LO QUE NECESITAMOS CON LOS ID DE CADA FUNCIONALIDAD  CON PUROS CONDICIONALES
+        print(self.valores)
+
+        if self.ventana_usuario.idFun == 0:
+            self.ventana_usuario.actualizar_label()
+        
+        ##metan lo suyo en donde va que después nos confundimos todos 
+        #los tqm 
+        
+        ###########todo funcionalidad 1
+        elif self.ventana_usuario.idFun == 1:
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                
+                self._vehiculo = self.valores[2]
+                self._categoria = self.valores[1]
+                self._mecanico == self.valores[4]
+                try:
+                    self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                except ErrorVehiculoElejido as v:
+                    ventanaError(v.display())
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
+        
+        elif self.ventana_usuario.idFun == 1.1:
+            try:
+                self.ventana_usuario.funcionalidad1_2(self.valores)
+            except ErrorRepuestoElejido as f:
+                ventanaError(f.display())
+        
+        ###########todo funcionalidad 2
+        elif self.ventana_usuario.idFun == 2:
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
+
+        elif self.ventana_usuario.idFun == 2.1:
+            self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
+
+        elif self.ventana_usuario.idFun == 2.3:
+            self.ventana_usuario.funcionalidad2_3(self.valores[0], self.valores[1])
+
+        elif self.ventana_usuario.idFun == 2.4:
+            self.ventana_usuario.funcionalidad2_4Final()     
+
+        ###########todo funcionalidad 3
+        elif self.ventana_usuario.idFun == 3:
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                if not(self.valores[0] == "Deluxe" or self.valores[0] == "Generico"):
+                    raise ErrorCategoriaElejido()
+                else:
+                    repuestos = []
+                    respuestosD = ""
+                    indice = 1
+                    if self.valores[0] == "Deluxe":
+                        for i in range(len(admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1]))):
+                            repuestos = admin.getInventario().getRepuestosDeluxe().repuestosDisponibles(self.valores[1])
+                        
+                    elif self.valores[0] == "Generico":
+                        for i in range(len(admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1]))):
+                            repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
+                    
+                    for rep in repuestos:
+                        respuestosD += f"{indice}.{rep}\n"
+                        indice += 1
+                    self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
+            except ErrorCategoriaElejido as v:
+                ventanaError(v.display())
+            
+        elif self.ventana_usuario.idFun == 3.1:
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad3_2(self.valores)
+            except ErrorCasillasVacias as f:
+                ventanaError(f.display())
+              
+        ###########todo funcionalidad 4
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "1" :
+            self.ventana_usuario.funcionalidad4_1()
+
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == '':      
+            try: 
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == '':
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+
+        
+        elif self.ventana_usuario.idFun == 4.1:
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_1Final(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+            
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "2" :
+            self.ventana_usuario.funcionalidad4_2()
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "1": 
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2Repuestos()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+
+        elif self.ventana_usuario.idFun == 4.2 and self.valores[0] == "2":
+            self.ventana_usuario.funcionalidad4_2Mecanicos()
+
+        elif self.ventana_usuario.idFun == 4.21: 
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2RepuestosFinal(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+        
+        elif self.ventana_usuario.idFun == 4.22: 
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad4_2MecanicosFinal(self.valores)
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+            
+        
+        elif self.ventana_usuario.idFun == 4 and self.valores[0] == "3":
+            self.ventana_usuario.funcionalidad4_3()
+        
+        ###########todo funcionalidad 5
+        elif self.ventana_usuario.idFun == 5:
+            try:
+                for valor in self.valores:
+                    if valor == '':
+                        raise ErrorCasillasVacias()
+                self._clienteCalificando = admin.getClienteNombre(self.valores[0])
+                self._mecanicoCalificado = admin.asignarMecanico(self.valores[1])
+                if self._clienteCalificando == None:
+                    raise ErrorClienteNone()
+                if self._mecanicoCalificado == None:
+                    raise ErrorMecanicoNone()
+                self.ventana_usuario.funcionalidad5_1()
+            except ErrorClienteNone as e:
+                ventanaError(e.display())
+            except ErrorMecanicoNone as b:
+                ventanaError(b.display())
+            except ErrorCasillasVacias as c:
+                ventanaError(c.display())
+        elif self.ventana_usuario.idFun == 5.1:
+            try:
+                if self.valores[0] == '':
+                    raise ErrorCasillasVacias()
+                calificacion = int(self.valores[0])
+                self._clienteCalificando.calificarTaller(admin, calificacion)
+                self.ventana_usuario.funcionalidad5_2()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+        elif self.ventana_usuario.idFun == 5.2:
+            try:
+                if self.valores[0] == "":
+                    raise ErrorCasillasVacias()
+                calificacion = int(self.valores[0])
+
+                if calificacion < 0:
+                    raise ErrorDato()
+                if calificacion > 3:
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
+                    admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
+
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
+                    admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
+                self.ventana_usuario.funcionalidad5_3()
+            
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+
+
+
+            
+        elif self.ventana_usuario.idFun == 5.3:
+            try:
+              if self.valores[0] == "":
+                  raise ErrorCasillasVacias()
+              
+              calificacion = int(self.valores[0])
+              if self.valores[0] > 3:
+                self._mecanicoCalificado.recibirComision(1000)
+              self.ventana_usuario.funcionalidad5_4()
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+
+            
+        elif self.ventana_usuario.idFun == 5.4:
+            try:
+                if self.valores[0] == "":
+                    raise ErrorCasillasVacias()
+                comision = int(self.valores[0])
+           
+                self._mecanicoCalificado.recibirComision(comision)
+                self._clienteCalificando.pagar(comision)
+                self.ventana_usuario.funcionalidad5_5()
+            
+            except ErrorCasillasVacias as a:
+                ventanaError(a.display())
+            except ValueError as b:
+                raise ErrorDato()
+            except ErrorDato as c:
+                ventanaError(c.display())
+        
+        
+        
+        
+        
+
+    def borrar(self):
+        # Poner los valores en blanco o vacío
+        for entry in self.winfo_children():
+            if isinstance(entry, tk.Entry):
+                entry.delete(0, "end")
 
 if __name__ == "__main__":
     VentanaInicial()
