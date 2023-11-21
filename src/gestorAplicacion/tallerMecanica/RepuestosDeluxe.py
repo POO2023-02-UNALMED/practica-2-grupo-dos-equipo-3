@@ -58,7 +58,7 @@ class RepuestosDeluxe(Repuestos):
         if (tiporepuesto == "Motor"):
 
             for repuesto in self._repuestosMotor:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[1] > 0:
                     repuestosDisponibles.append(repuesto[0])
                 else:
                     continue
@@ -66,7 +66,7 @@ class RepuestosDeluxe(Repuestos):
         elif (tiporepuesto == "Frenos"):
             
               for repuesto in self._repuestosFrenos:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[1] > 0:
                     repuestosDisponibles.append(repuesto[0])
                 else:
                     continue
@@ -74,7 +74,7 @@ class RepuestosDeluxe(Repuestos):
         elif (tiporepuesto == "Electrico"):
 
               for repuesto in self._repuestosElectrico:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[1] > 0:
                     repuestosDisponibles.append(repuesto[0])
                 else:
                     continue
@@ -82,7 +82,7 @@ class RepuestosDeluxe(Repuestos):
         elif (tiporepuesto == "Llantas"):
 
              for repuesto in self._repuestosLlantas:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[1] > 0:
                     repuestosDisponibles.append(repuesto[0])
                 else:
                     continue
@@ -90,7 +90,7 @@ class RepuestosDeluxe(Repuestos):
         elif (tiporepuesto == "Carroceria"):
             
              for repuesto in self._repuestosCarroceria:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[1] > 0:
                     repuestosDisponibles.append(repuesto[0])
                 else:
                     continue

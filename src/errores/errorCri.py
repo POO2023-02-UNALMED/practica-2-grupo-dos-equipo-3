@@ -7,8 +7,3 @@ class ErrorCritico(ErrorAplicacion):
     def display(self):
         print(self.args[0])
         
-try:        
-    if(__name__ == "__main__"):
-        raise ErrorCritico("Lanzamiento")
-except (ErrorCritico) as err:
-    err.display()

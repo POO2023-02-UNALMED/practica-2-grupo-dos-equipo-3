@@ -11,6 +11,8 @@ from src.gestorAplicacion.tallerMecanica.RepuestosGenericos import RepuestosGene
 from src.gestorAplicacion.tallerMecanica.RepuestosDeluxe import RepuestosDeluxe
 from src.gestorAplicacion.tallerMecanica.Inventario import Inventario
 from src.baseDatos.serializador import serializador
+from src.errores.errorCasillasVacias import ErrorCasillasVacias
+from src.errores.errorVElejido import ErrorVehiculoElejido
 
 
 admin = Administrador()
@@ -107,6 +109,8 @@ class FieldFrame(tk.Frame):
         self._vehiculo = ""
         self._categoria = ""
         self._mecanico = ""
+        self._clienteCalificando = ""
+        self._mecanicoCalificado = ""
 
         # Crear etiquetas y campos usando Grid
         for i, criterio in enumerate(criterios):
@@ -147,18 +151,33 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 1
         elif self.ventana_usuario.idFun == 1:
-            self._vehiculo = self.valores[1]
-            self._categoria = self.valores[0]
-            self._mecanico == self.valores[3]
-            self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                
+                self._vehiculo = self.valores[1]
+                self._categoria = self.valores[0]
+                self._mecanico == self.valores[3]
+                try:
+                    self._clienteCreado = self.ventana_usuario.funcionalidad1_1(self.valores)
+                except ErrorVehiculoElejido as v:
+                    self.ventana_usuario.mostrarError(v.display())
+            except ErrorCasillasVacias as f:
+                self.ventana_usuario.mostrarError(f.display())
         
         elif self.ventana_usuario.idFun == 1.1:
-            
             self.ventana_usuario.funcionalidad1_2(self.valores)
         
         ###########todo funcionalidad 2
         elif self.ventana_usuario.idFun == 2:
-            self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+            try:
+                for i in self.valores:
+                    if i == "":
+                        raise ErrorCasillasVacias()
+                self.ventana_usuario.funcionalidad2_1(self.valores[0], self.valores[1])
+            except ErrorCasillasVacias as f:
+                self.ventana_usuario.mostrarError(f.display())
 
         elif self.ventana_usuario.idFun == 2.1:
             self.ventana_usuario.funcionalidad2_2(self.valores[0], self.valores[1], self.valores[2], self.valores[3], self.valores[4])
@@ -183,7 +202,7 @@ class FieldFrame(tk.Frame):
                     repuestos = admin.getInventario().getRepuestosGenericos().repuestosDisponibles(self.valores[1])
             
             for rep in repuestos:
-                respuestosD += indice + ". " + rep + "\n"
+                respuestosD += f"{indice}.{rep}\n"
                 indice += 1
             self.ventana_usuario.funcionalidad3_1(self.valores, respuestosD)
             
@@ -217,14 +236,39 @@ class FieldFrame(tk.Frame):
         
         ###########todo funcionalidad 5
         elif self.ventana_usuario.idFun == 5:
-            self.ventana_usuario.funcionalidad5_1()
+            if admin.getClienteNombre(self.valores[0]) is not None and admin.asignarMecanico(self.valores[1] is not None):
+                self._clienteCalificando = admin.getClienteNombre(self.valores[0])
+                self._mecanicoCalificado = admin.asignarMecanico(self.valores[1])
+                self.ventana_usuario.funcionalidad5_1()
+            else:
+                pass
         elif self.ventana_usuario.idFun == 5.1:
+            self._clienteCalificando.calificarTaller(admin, self.valores[0])
             self.ventana_usuario.funcionalidad5_2()
         elif self.ventana_usuario.idFun == 5.2:
+            if self.valores[0] > 3:
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Motor")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Frenos")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Electrico")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Llantas")
+                admin.getInventario().getRepuestosDeluxe().aumentarPrecio(500,"Carroceria")
+
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Motor")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Frenos")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Electrico")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Llantas")
+                admin.getInventario().getRepuestosGenericos().aumentarPrecio(500,"Carroceria")
+
             self.ventana_usuario.funcionalidad5_3()
         elif self.ventana_usuario.idFun == 5.3:
+            if self.valores[0] > 3:
+                self._mecanicoCalificado.recibirComision(1000)
+
             self.ventana_usuario.funcionalidad5_4()
         elif self.ventana_usuario.idFun == 5.4:
+            if self.valores[0] > 0:
+                self._mecanicoCalificado.recibirComision(self.valores[0])
+                self._clienteCalificando.pagar(self.valores[0])
             self.ventana_usuario.funcionalidad5_5()
         
         
@@ -303,6 +347,9 @@ class VentanaUsuario:
         etiqueta = tk.Label(ventanaSalida, text=textoSalida, borderwidth=2, relief="solid", wraplength=770, font=16)
         etiqueta.grid(row=0, column=0, padx=10, pady=10)
 
+    def mostrarError(self, texto):
+        self.label2.config(text=texto)
+    
     def funcionalidad1(self):
         self.label1.config(text="Solicitar un servicio", font=("Arial", 16))
         self.label2.config(text="Ingresa, que deseas hacer hoy")
@@ -332,8 +379,9 @@ class VentanaUsuario:
         repuestos = ""
         id = 1
         lista = admin.getInventario().consultarRepuestosDisponibles(valores[0],valores[2])
+        
         for rep in lista:
-            repuestos += id + ". " + rep
+            repuestos += f"{id}.{rep}"
             id += 1
         
         self.label2.config(text="Repuestos disponibles: " + repuestos)
@@ -349,23 +397,23 @@ class VentanaUsuario:
         self.frame2 = nuevo_frame2
         self.frame2.pack(padx=10, pady=10)
         self.idFun = 1.1
-        
+                
         self._cliente = cliente
-        return cliente
-
+        return cliente       
+        
     def funcionalidad1_2(self, valores):
         precio = 0
         if (self._vehiculo == "Moto" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
 
         elif (self._vehiculo == "Carro" and self._categoria == "Deluxe"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosDeluxe().obtenerPrecio(self._tipoRep, valores[0])
                                     
         elif(self._categoria == "Generico" and self._vehiculo == "Moto"):
-            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioMoto() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
                                     
         elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
-            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(valores[0], self._cliente.getVehiculos()[0].getTipoDeDanio().getTipo())
+            precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(self._tipoRep, valores[0])
 
         print(precio)
         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
@@ -522,7 +570,7 @@ class VentanaUsuario:
         self.label1.config(text="Solicitar repuestos", font=("Arial", 16))
         
         
-        self.label2.config(text="Escoja respuestos: " + repuestosD)
+        self.label2.config(text="Escoja respuestos: \n" + repuestosD)
         
         criterios_nuevos = ["Repuesto", "Proveedor"]
         valores_iniciales_nuevos = ["", ""]

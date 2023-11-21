@@ -79,7 +79,7 @@ class Administrador:
         return orden
  
     def asignarMecanico(self, nombre):
-        mecanicoElegido = self._mecanicos[0]
+        mecanicoElegido = None
         for i in range(len(self._mecanicos)):
             if self._mecanicos[i].getNombre() == nombre:
                 mecanicoElegido = self._mecanicos[i]
