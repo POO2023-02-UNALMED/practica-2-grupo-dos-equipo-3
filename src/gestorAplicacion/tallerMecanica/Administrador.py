@@ -538,27 +538,27 @@ class Administrador:
         proveedoresDisponibles = []
         if (tipo == "Motor"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadMotor(clave)):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Motor",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Frenos"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadFrenos(clave)):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Frenos",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Electrico"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadElectrico(clave)):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Electrico",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Llantas"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadLlantas(clave)):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Llantas",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         elif (tipo == "Carroceria"):
             for i in range(len(self._proveedores)):
-                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidadCarroceria(clave)):
+                if (self._proveedores[i].getRepuestosGenericos().verificarDisponibilidad("Carroceria",clave)):
                     proveedoresDisponibles.append(self._proveedores[i])
 		
         return proveedoresDisponibles
