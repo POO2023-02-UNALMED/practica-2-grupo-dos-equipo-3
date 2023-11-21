@@ -6,12 +6,12 @@ class RepuestosGenericos(Repuestos):
         super().__init__()
 
     
-    def verificarDisponibilidad(self, tiporepuesto, repuesto):
+    def verificarDisponibilidad(self, tiporepuesto, repuestos):
         
         if (tiporepuesto == "Motor"):
 
             for repuesto in self._repuestosMotor:
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[0] == repuestos and repuesto[1] > 0:
                     return True
                 else:
                     return False
@@ -20,7 +20,7 @@ class RepuestosGenericos(Repuestos):
             
             for repuesto in self._repuestosFrenos:
 
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[0] == repuestos and repuesto[1] > 0:
                     return True
                 else:
                     return False
@@ -29,7 +29,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosElectrico:
 
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[0] == repuestos and repuesto[1] > 0:
                     return True
                 else:
                     return False
@@ -38,7 +38,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosLlantas:
 
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[0] == repuestos and repuesto[1] > 0:
                     return True
                 else:
                     return False
@@ -47,7 +47,7 @@ class RepuestosGenericos(Repuestos):
             
             for repuesto in self._repuestosCarroceria:
 
-                if repuesto[0] == repuesto and repuesto[1] > 0:
+                if repuesto[0] == repuestos and repuesto[1] > 0:
                     return True
                 else:
                     return False
@@ -165,13 +165,13 @@ class RepuestosGenericos(Repuestos):
                 repuesto[2] -= aumento
                 
 
-    def obtenerPrecio(self, tiporepuesto, repuesto):
+    def obtenerPrecio(self, tiporepuesto, repuestos):
         precio = 0
         if (tiporepuesto == "Motor"):
 
             for repuesto in self._repuestosMotor:
                 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
                    
                     precio = repuesto[2]
                 
@@ -179,7 +179,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosFrenos:
 
-                if repuesto[0] == repuesto :
+                if repuesto[0] == repuestos:
 
                     precio = repuesto[2]
                 
@@ -187,7 +187,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosElectrico:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     precio = repuesto[2]
         
@@ -195,7 +195,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosLlantas:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     precio = repuesto[2]
                 
@@ -203,27 +203,27 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosCarroceria:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     precio = repuesto[2]
         
         return precio
     
-    def obtenerCantidad(self, tiporepuesto, repuesto):
+    def obtenerCantidad(self, tiporepuesto, repuestos):
 
         if (tiporepuesto == "Motor"):
 
             for repuesto in self._repuestosMotor:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     return repuesto[1]
                 
         elif (tiporepuesto == "Frenos"):
 
-            for repuesto in self._repuestosFrenos:
+            for repuesto in self._repuestosFrenoss:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     return repuesto[1]
                 
@@ -231,7 +231,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosElectrico:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     return repuesto[1]
         
@@ -239,7 +239,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosLlantas:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     return repuesto[1]
                 
@@ -247,7 +247,7 @@ class RepuestosGenericos(Repuestos):
 
             for repuesto in self._repuestosCarroceria:
 
-                if repuesto[0] == repuesto:
+                if repuesto[0] == repuestos:
 
                     return repuesto[1]
                 
@@ -257,7 +257,7 @@ class RepuestosGenericos(Repuestos):
 
                 for repuesto in self._repuestosMotor:
 
-                    if repuesto[0] == repuesto:
+                    if repuesto[0] == repuestos:
 
                         repuesto[1] += cantidad
                 
@@ -265,7 +265,7 @@ class RepuestosGenericos(Repuestos):
 
                 for repuesto in self._repuestosFrenos:
 
-                     if repuesto[0] == repuesto:
+                     if repuesto[0] == repuestos:
 
                          repuesto[1] += cantidad
                         
@@ -273,7 +273,7 @@ class RepuestosGenericos(Repuestos):
 
                 for repuesto in self._repuestosElectrico:
 
-                    if repuesto[0] == repuesto:
+                    if repuesto[0] == repuestos:
 
                         repuesto[1] += cantidad
                 
@@ -281,7 +281,7 @@ class RepuestosGenericos(Repuestos):
 
                 for repuesto in self._repuestosLlantas:
 
-                    if repuesto[0] == repuesto:
+                    if repuesto[0] == repuestos:
 
                          repuesto[1] += cantidad
                         
@@ -289,6 +289,6 @@ class RepuestosGenericos(Repuestos):
 
                 for repuesto in self._repuestosCarroceria:
 
-                    if repuesto[0] == repuesto:
+                    if repuesto[0] == repuestos:
 
                          repuesto[1] += cantidad
