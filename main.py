@@ -546,7 +546,7 @@ class VentanaUsuario:
         return cliente       
         
     def funcionalidad1_2(self, valores):
-        #try:
+        try:
             print(admin.getInventario().getRepuestosDeluxe().obtenerPrecio('Motor','Bujia'))
             for i in self._repuestosD:
                 if i == valores[0]:
@@ -563,17 +563,20 @@ class VentanaUsuario:
                 elif (self._vehiculo == "Carro" and self._categoria == "Generico"):
                     precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
 
-                print(self._cliente)
-                orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], self._mecanico, admin, precio)
-                orden.setRepuesto(valores[0])
-                print(orden)
-                
-                self.frame2.destroy()
-                self.label2.config(text="Precio: "+precio)
-            #else:
-                #raise ErrorRepuestoElejido()
-        #except:
-            #raise ErrorRepuestoElejido()
+                for mec in admin.getMecanicos():
+                    if mec.getNombre() == self._mecanico:
+                        orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], mec, admin, precio)
+                        orden.setRepuesto(valores[0])
+                    
+                        self.frame2.destroy()
+                        self._cliente.pagar(precio)
+                        self.label2.config(text=("Precio: "+str(precio) +"\nPago Exitoso"))
+                else:
+                    self.label2.config(text="Mecanico colocado no disponible")
+            else:
+                raise ErrorRepuestoElejido()
+        except:
+            raise ErrorRepuestoElejido()
         
     def funcionalidad2(self):
         "no se ingresa ningun nombre de mecanico ni ninguna orden "
