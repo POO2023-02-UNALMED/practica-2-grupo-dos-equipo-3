@@ -565,6 +565,7 @@ class VentanaUsuario:
                     precio = admin.getInventario().getPrecioCarro() + admin.getInventario().getRepuestosGenericos().obtenerPrecio(tiporepuesto=self._tipoRep, repuesto=valores[0])
 
                 for mec in admin.getMecanicos():
+                    print(mec.getNombre(), self._mecanico)
                     if mec.getNombre() == self._mecanico:
                         orden = self._cliente.crearOrden(self._cliente.getVehiculos()[0], mec, admin, precio)
                         orden.setRepuesto(valores[0])
@@ -572,6 +573,7 @@ class VentanaUsuario:
                         self.frame2.destroy()
                         self._cliente.pagar(precio)
                         self.label2.config(text=("Precio: "+str(precio) +"\nPago Exitoso"))
+                        return
                 else:
                     self.label2.config(text="Mecanico colocado no disponible")
             else:
